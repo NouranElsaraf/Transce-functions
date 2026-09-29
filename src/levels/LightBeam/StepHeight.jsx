@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react';
 import StepLayout from '../../components/StepLayout.jsx';
 import Checklist from '../../components/Checklist.jsx';
 import Readout from '../../components/Readout.jsx';
+import Slider from '../../components/Slider.jsx';
 import M from '../../components/MathText.jsx';
 import { degToRad } from '../../core/mathUtils.js';
 import BeamScene from './BeamScene.jsx';
@@ -71,6 +72,7 @@ export default function StepHeight({ api }) {
           if (type === 'down' || dragging) setAngle(deg);
         }}
       />
+      <Slider label="…or turn the dial" value={angle} min={0} max={359} step={1} onChange={setAngle} format={(v) => `${v}°`} />
     </StepLayout>
   );
 }

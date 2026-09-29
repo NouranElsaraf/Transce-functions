@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'react';
 import Plot from '../../components/Plot.jsx';
 import Button from '../../components/Button.jsx';
+import Slider from '../../components/Slider.jsx';
 import { clamp, derivative } from '../../core/mathUtils.js';
 import LockFrame from './LockFrame.jsx';
 import { startClock } from './vault.js';
@@ -46,6 +47,19 @@ export default function LockTangent({ api }) {
             setX(clamp(p.x, -2.8, 2.8));
             setMsg(null);
           }
+        }}
+      />
+      <Slider
+        label="…or move the probe with the slider"
+        value={x}
+        min={-2.8}
+        max={2.8}
+        step={0.02}
+        disabled={done}
+        format={(v) => v.toFixed(2)}
+        onChange={(v) => {
+          setX(v);
+          setMsg(null);
         }}
       />
       {!done && (

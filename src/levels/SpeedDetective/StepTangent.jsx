@@ -8,6 +8,7 @@ import { useState } from 'react';
 import StepLayout from '../../components/StepLayout.jsx';
 import Plot from '../../components/Plot.jsx';
 import Button from '../../components/Button.jsx';
+import Slider from '../../components/Slider.jsx';
 import Readout from '../../components/Readout.jsx';
 import { clamp } from '../../core/mathUtils.js';
 import Road from './Road.jsx';
@@ -96,6 +97,20 @@ export default function StepTangent({ api }) {
           }
         }}
         cursor="grab"
+      />
+      <Slider
+        label="…or slide through time"
+        value={t}
+        min={0}
+        max={DURATION}
+        step={0.05}
+        disabled={done}
+        format={(v) => `${v.toFixed(1)} s`}
+        onChange={(v) => {
+          setT(v);
+          setMoved((n) => n + 1);
+          setFeedback(null);
+        }}
       />
     </StepLayout>
   );

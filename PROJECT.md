@@ -29,7 +29,7 @@ The experience borrows:
 | M2 — Calculus foundations | L1 Speed Detective, L2 Growing Kingdom, L3 Graph Sculptor | ✅ |
 | M3 — Waves | L4 Light Beam, L5 The Swing | ✅ |
 | M4 — Hyperbolic & finale | L6 Hyperbolic World, L7 Escape Room | ✅ |
-| M5 — Polish | Accessibility pass, docs, tests | ⏳ |
+| M5 — Polish | Accessibility pass, docs, tests | ✅ |
 | M6 — Next | See *Future Features* | ⏳ |
 
 ## Architecture
@@ -97,5 +97,5 @@ tests/                    vitest unit tests for core logic
 - **Chapter 2: Inverse functions** — logarithms as "undoing" the Growing Kingdom.
 - **Chapter 3: Integration** — area under the Speed Detective's velocity graph = distance.
 - **Arabic / French localisation** with RTL layout support.
-- **Accessibility**: full keyboard play for every canvas interaction, screen-reader narration of graphs.
+- **Accessibility**: screen-reader narration of graphs (every canvas drag already has a slider alternative).
 - **Offline PWA** install so it runs in a lab with no internet.

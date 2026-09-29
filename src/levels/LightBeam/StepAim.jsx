@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import StepLayout from '../../components/StepLayout.jsx';
 import Button from '../../components/Button.jsx';
 import Checklist from '../../components/Checklist.jsx';
+import Slider from '../../components/Slider.jsx';
 import { useAnimationFrame } from '../../hooks/useAnimationFrame.js';
 import { sound } from '../../core/sound.js';
 import BeamScene from './BeamScene.jsx';
@@ -115,6 +116,9 @@ export default function StepAim({ api }) {
             : undefined
         }
       />
+      {phase === 'guess' && !done && (
+        <Slider label="…or set your guess with the slider" value={guess ?? 0} min={0} max={359} step={1} onChange={setGuess} format={(v) => `${v}°`} />
+      )}
     </StepLayout>
   );
 }
