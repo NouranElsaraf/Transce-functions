@@ -7,6 +7,8 @@
 | 1 | The Speed Detective | Rate of change | 4 | ~8 min |
 | 2 | Growing Kingdom | Exponential functions | 5 | ~9 min |
 | 3 | Graph Sculptor | Graph intuition | 5 | ~8 min |
+| 4 | Light Beam | Trigonometric functions | 5 | ~9 min |
+| 5 | The Swing | Periodic motion | 4 | ~8 min |
 
 ## 1. The Speed Detective
 
@@ -48,4 +50,31 @@
 3. **Stretch & squeeze** — Multiplying outside stretches vertically; inside compresses horizontally.
 4. **Mirror** — A minus outside reflects across the x-axis; inside reflects across the y-axis.
 5. **Master** — Combine all moves and read them off y = a·f(bx + c) + k.
+
+## 4. Light Beam
+
+> A flashlight spins in a round room. Its light spot secretly draws a wave.
+
+**Big idea:** A point moving round a circle has height sin θ and sideways position cos θ. Because turning repeats every 360° (2π), sine and cosine repeat forever — they are the maths of anything periodic.
+
+**Steps**
+
+1. **Aim** — Link an angle of rotation to a position on the circle.
+2. **Height of the spot** — Find where the spot is highest, lowest and level: the values of sine.
+3. **Draw the wave** — See the height trace a sine wave that repeats every 360°.
+4. **The floor shadow** — Discover cosine as the same wave shifted a quarter turn.
+5. **Tune the wave** — Control amplitude and frequency: y = A·sin(kθ).
+
+## 5. The Swing
+
+> Predict a pendulum seconds into the future — without watching it.
+
+**Big idea:** A pendulum repeats the same cosine wave, θ(t) = A·cos(2πt/T). Its period depends on the rope length (T = 2π√(L/g)), not on how far you pull it — so one cycle predicts the future.
+
+**Steps**
+
+1. **Where will it be?** — Use half and quarter swings to predict position in time.
+2. **Pen on paper** — Recognise the swing’s angle-time graph as a cosine wave.
+3. **Longer rope** — Discover that period depends on length but not amplitude.
+4. **Forecast** — Use periodicity to predict a far-future position.
 

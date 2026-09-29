@@ -8,8 +8,10 @@
 import speedDetective from './SpeedDetective/meta.js';
 import growingKingdom from './GrowingKingdom/meta.js';
 import graphSculptor from './GraphSculptor/meta.js';
+import lightBeam from './LightBeam/meta.js';
+import theSwing from './TheSwing/meta.js';
 
 /** @type {Array<import('./types.js').LevelMeta>} */
-export const LEVEL_METAS = [speedDetective, growingKingdom, graphSculptor];
+export const LEVEL_METAS = [speedDetective, growingKingdom, graphSculptor, lightBeam, theSwing];
 
 export const LEVEL_IDS = LEVEL_METAS.map((m) => m.id);

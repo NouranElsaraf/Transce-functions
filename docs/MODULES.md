@@ -138,6 +138,13 @@ Animated horizontal progress bar (value 0–1).
 
 Row of labelled live numbers ("time 3.2 s · speed 12 m/s").
 
+### Sketch
+
+`src/components/Sketch.jsx`
+
+Tiny inline curve sketch with a caption, used as a visual answer option
+("which shape will appear?") so players compare shapes, not words.
+
 ### Slider
 
 `src/components/Slider.jsx`
@@ -414,6 +421,68 @@ Level 2 — Growing Kingdom: exponential growth, decay, and the number e.
 
 Level 2 metadata.
 
+### LightBeam/BeamScene
+
+`src/levels/LightBeam/BeamScene.jsx`
+
+The round room: a flashlight at the centre, its beam and light spot on the
+wall, plus optional projections of the spot onto a height ruler (sine) and a
+floor ruler (cosine). Reports pointer angles in degrees for aiming/dragging.
+
+### LightBeam/StepAim
+
+`src/levels/LightBeam/StepAim.jsx`
+
+Step 1 — Aim. The light is off. The player taps the wall where they think the
+spot will land after a given turn, then switches the light on to check.
+
+### LightBeam/StepCos
+
+`src/levels/LightBeam/StepCos.jsx`
+
+Step 4 — The floor shadow. A second projection onto the floor draws another
+wave. The player identifies it as the sine wave shifted a quarter turn: cosine.
+
+### LightBeam/StepHeight
+
+`src/levels/LightBeam/StepHeight.jsx`
+
+Step 2 — Height of the spot. Drag the flashlight around; a ruler shows how
+high the spot is. Three goals reveal the key values of sine.
+
+### LightBeam/StepTune
+
+`src/levels/LightBeam/StepTune.jsx`
+
+Step 5 — Tune the wave. Beam length sets the amplitude and spin speed sets
+how many waves fit in one turn. Match two ghost waves to earn y = A·sin(kθ).
+
+### LightBeam/StepWave
+
+`src/levels/LightBeam/StepWave.jsx`
+
+Step 3 — Draw the wave. Predict the shape the spot's height will trace, then
+spin the light twice and watch the sine wave appear — and repeat.
+
+### LightBeam/WaveTrace
+
+`src/levels/LightBeam/WaveTrace.jsx`
+
+Plot of spot height (and optionally floor position) against total angle
+turned, drawn up to the current angle — the wave appears as the light spins.
+
+### LightBeam
+
+`src/levels/LightBeam/index.jsx`
+
+Level 4 — Light Beam: sine and cosine from circular motion; periodicity.
+
+### LightBeam/meta
+
+`src/levels/LightBeam/meta.js`
+
+Level 4 metadata.
+
 ### SpeedDetective/Road
 
 `src/levels/SpeedDetective/Road.jsx`
@@ -468,6 +537,60 @@ Level 1 metadata.
 `src/levels/SpeedDetective/trip.js`
 
 The car's journeys, as position functions of time (metres vs seconds).
+
+### TheSwing/Pendulum
+
+`src/levels/TheSwing/Pendulum.jsx`
+
+Canvas pendulum: pivot, rope, bob, the swing arc, an optional ghost bob
+(the player's prediction) and pointer reporting as an angle from vertical.
+
+### TheSwing/StepForecast
+
+`src/levels/TheSwing/StepForecast.jsx`
+
+Step 4 — Forecast. Only the first 4 seconds of the graph are known.
+Predict the position at 7.5 s using periodicity, then fast-forward to check.
+
+### TheSwing/StepLength
+
+`src/levels/TheSwing/StepLength.jsx`
+
+Step 3 — Longer rope. Two sliders (rope length, pull-back angle) and a live
+period readout. Two predictions uncover T = 2π√(L/g) and that amplitude
+doesn't matter (for small swings).
+
+### TheSwing/StepPredict
+
+`src/levels/TheSwing/StepPredict.jsx`
+
+Step 1 — Where will it be? Watch one swing (2 s), then for three moments in
+time drag a ghost bob to your prediction and release the real pendulum.
+
+### TheSwing/StepTrace
+
+`src/levels/TheSwing/StepTrace.jsx`
+
+Step 2 — Pen on paper. A pen on the bob draws the angle over time.
+The player recognises the wave from the Light Beam — and that it's cosine.
+
+### TheSwing
+
+`src/levels/TheSwing/index.jsx`
+
+Level 5 — The Swing: periodic motion, cosine in time, and the pendulum period.
+
+### TheSwing/meta
+
+`src/levels/TheSwing/meta.js`
+
+Level 5 metadata.
+
+### TheSwing/pendulum
+
+`src/levels/TheSwing/pendulum.js`
+
+Pendulum model (small-angle approximation), in SI units and degrees.
 
 ### metaRegistry
 
