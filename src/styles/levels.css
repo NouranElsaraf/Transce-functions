@@ -1,0 +1,82 @@
+/* Level-specific shared pieces (readouts, scenes, controls). Individual levels
+   add small sections below, prefixed with their name. */
+
+.readout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.readout-item {
+  display: grid;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  min-width: 96px;
+}
+.readout-item span {
+  font-size: 12px;
+  color: var(--c-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.readout-item b {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+}
+.controls {
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  backdrop-filter: var(--blur);
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 650;
+  background: var(--c-accent-soft);
+  color: var(--c-accent);
+}
+.tag.is-good {
+  background: var(--c-good-soft);
+  color: var(--c-good);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  font-size: 14px;
+  color: var(--c-muted);
+}
+.legend i {
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  border-radius: 2px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+.callout {
+  font-size: 15px;
+  color: var(--c-muted);
+}
+.big-number {
+  font-size: clamp(34px, 6vw, 56px);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+}

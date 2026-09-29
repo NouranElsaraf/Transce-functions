@@ -1,0 +1,84 @@
+/* Design tokens — every colour, radius and shadow in one place.
+   Light is the default; dark overrides via [data-theme='dark'] (set by GameContext). */
+:root {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Text', Inter, 'Segoe UI', Roboto, sans-serif;
+  --font-display: -apple-system, BlinkMacSystemFont, 'SF Pro Display', Inter, 'Segoe UI', Roboto, sans-serif;
+  --font-math: 'Iowan Old Style', 'Palatino Linotype', Palatino, 'Times New Roman', serif;
+
+  --c-bg: #f4f5fb;
+  --c-bg-2: #eceefa;
+  --c-surface: rgba(255, 255, 255, 0.66);
+  --c-surface-strong: rgba(255, 255, 255, 0.86);
+  --c-surface-solid: #ffffff;
+  --c-border: rgba(20, 24, 60, 0.08);
+  --c-text: #14172b;
+  --c-muted: #62678a;
+  --c-grid: rgba(20, 24, 60, 0.06);
+  --c-axis: rgba(20, 24, 60, 0.35);
+
+  --c-accent: #5b5bd6;
+  --c-accent-2: #22b39a;
+  --c-accent-soft: rgba(91, 91, 214, 0.12);
+  --c-good: #16a36f;
+  --c-good-soft: rgba(22, 163, 111, 0.14);
+  --c-bad: #e5484d;
+  --c-bad-soft: rgba(229, 72, 77, 0.12);
+  --c-warn: #f5a524;
+
+  --c-series-1: #5b5bd6;
+  --c-series-2: #e5484d;
+  --c-series-3: #22b39a;
+  --c-series-4: #f5a524;
+  --c-series-5: #3e9fe0;
+
+  --blob-1: rgba(120, 110, 255, 0.28);
+  --blob-2: rgba(34, 195, 166, 0.22);
+  --blob-3: rgba(255, 150, 90, 0.18);
+
+  --radius-sm: 10px;
+  --radius: 18px;
+  --radius-lg: 26px;
+  --shadow: 0 1px 2px rgba(20, 24, 60, 0.05), 0 8px 30px rgba(20, 24, 60, 0.07);
+  --shadow-lg: 0 20px 60px rgba(20, 24, 60, 0.18);
+  --blur: saturate(160%) blur(18px);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --c-bg: #0b0c16;
+  --c-bg-2: #11132a;
+  --c-surface: rgba(30, 33, 60, 0.55);
+  --c-surface-strong: rgba(34, 37, 68, 0.85);
+  --c-surface-solid: #181a30;
+  --c-border: rgba(255, 255, 255, 0.08);
+  --c-text: #eceefe;
+  --c-muted: #9a9fc6;
+  --c-grid: rgba(255, 255, 255, 0.06);
+  --c-axis: rgba(255, 255, 255, 0.35);
+
+  --c-accent: #8b8bff;
+  --c-accent-2: #3ddcbd;
+  --c-accent-soft: rgba(139, 139, 255, 0.16);
+  --c-good: #3ddc97;
+  --c-good-soft: rgba(61, 220, 151, 0.14);
+  --c-bad: #ff6b70;
+  --c-bad-soft: rgba(255, 107, 112, 0.14);
+  --c-warn: #ffc053;
+
+  --c-series-1: #8b8bff;
+  --c-series-2: #ff6b70;
+  --c-series-3: #3ddcbd;
+  --c-series-4: #ffc053;
+  --c-series-5: #62b8ff;
+
+  --blob-1: rgba(110, 100, 255, 0.22);
+  --blob-2: rgba(34, 195, 166, 0.12);
+  --blob-3: rgba(255, 120, 90, 0.1);
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.55);
+  color-scheme: dark;
+}

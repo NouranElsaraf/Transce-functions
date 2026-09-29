@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Documentation generator.
  *
@@ -54,14 +53,15 @@ async function buildModulesDoc() {
     const doc = parseModuleDoc(await readFile(file, 'utf8'));
     if (!doc) continue;
     const rel = path.relative(ROOT, file).split(path.sep).join('/');
-    const group = rel.split('/').slice(1, 2)[0] || 'root';
+    const parts = rel.split('/');
+    const group = parts.length > 2 ? parts[1] : '(root)';
     if (!groups.has(group)) groups.set(group, []);
     groups.get(group).push({ rel, ...doc });
   }
   let md = HEADER + '# Module Reference\n\n';
   md += 'Every documented source file, grouped by folder. Add a `/** ... @module Name */` block at the top of a file to have it appear here.\n\n';
   for (const [group, mods] of groups) {
-    md += `## \`src/${group}\`\n\n`;
+    md += group === '(root)' ? '## `src/`\n\n' : `## \`src/${group}\`\n\n`;
     for (const m of mods) {
       md += `### ${m.name || path.basename(m.rel)}\n\n\`${m.rel}\`\n\n${m.description}\n\n`;
     }
@@ -122,7 +122,10 @@ async function main() {
   if (CHECK) console.log('✓ docs are up to date');
 }
 
-main().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+// Only run when executed directly (not when imported by tests).
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}
