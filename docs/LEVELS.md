@@ -2,4 +2,50 @@
 
 # Level Guide
 
-_No levels yet._
+| # | Level | Topic | Steps | Est. time |
+|---|---|---|---|---|
+| 1 | The Speed Detective | Rate of change | 4 | ~8 min |
+| 2 | Growing Kingdom | Exponential functions | 5 | ~9 min |
+| 3 | Graph Sculptor | Graph intuition | 5 | ~8 min |
+
+## 1. The Speed Detective
+
+> A car races past. When was it fastest? Find the clue hiding in the graph.
+
+**Big idea:** Speed is the slope of the position graph. Zoom in on any point until the curve looks straight — that slope is the derivative, the instantaneous rate of change.
+
+**Steps**
+
+1. **Photo finish** — Notice that "fast" means covering more distance in the same time.
+2. **Steepest point** — Connect speed with the steepness (slope) of the position-time graph.
+3. **Zoom in** — Watch average speed over a shrinking gap settle on one number: the derivative.
+4. **Read the slopes** — Flat tangent = stopped, downhill tangent = moving backwards.
+
+## 2. Growing Kingdom
+
+> Your granary doubles every morning. How bad could that be?
+
+**Big idea:** Multiplying by the same factor each step (y = aˣ) starts slowly, then overtakes any steady growth. The special base e ≈ 2.718 grows at a rate equal to its own size.
+
+**Steps**
+
+1. **Day by day** — Experience doubling one step at a time and predict the next day.
+2. **One week** — Notice doubling beats the "add a bit each day" instinct.
+3. **One month** — Feel the explosion: each day outgrows all previous days combined.
+4. **The race** — Exponential growth eventually overtakes any linear growth.
+5. **Meet aˣ** — Connect the story to y = aˣ, see decay, and discover e.
+
+## 3. Graph Sculptor
+
+> Lift, slide, stretch and flip curves until they match the ghost.
+
+**Big idea:** Changes outside a function act on heights (up/down, stretch, flip). Changes inside act on x — and they work backwards: +3 inside moves the graph 3 to the left.
+
+**Steps**
+
+1. **Lift** — Adding to the output shifts the graph vertically.
+2. **Slide** — Adding to the input shifts the graph horizontally — in the opposite direction.
+3. **Stretch & squeeze** — Multiplying outside stretches vertically; inside compresses horizontally.
+4. **Mirror** — A minus outside reflects across the x-axis; inside reflects across the y-axis.
+5. **Master** — Combine all moves and read them off y = a·f(bx + c) + k.
+

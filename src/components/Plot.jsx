@@ -6,6 +6,7 @@
  *   points — [{ x, y, color, r, label, ring }]
  *   lines  — [{ x1, y1, x2, y2, color, width, dash }]
  * plus an optional `draw(ctx, view)` escape hatch for custom art.
+ * Colours may be CSS colours or theme keys ('accent', 's1'…'s5', 'good', 'bad', 'muted'…).
  * `onPointer(type, {x, y, px, py}, dragging)` reports pointer events in world units.
  * @module Plot
  */
@@ -147,6 +148,8 @@ export default function Plot({
   grid = true,
   axes = true,
   ticks = true,
+  xLabel,
+  yLabel,
   draw,
   underlay,
   onPointer,
@@ -173,12 +176,13 @@ export default function Plot({
       onPointerUp={handler('up')}
       draw={(ctx, { width, height: h, colors }) => {
         const view = { ...makeView(x, y, width, h), colors };
+        const col = (c, fallback) => (c && colors[c]) || c || fallback;
         underlay?.(ctx, view);
         drawGrid(ctx, view, colors, { grid, axes, ticks });
-        for (const fn of fns) strokeFunction(ctx, view, { color: colors.accent, ...fn });
+        for (const fn of fns) strokeFunction(ctx, view, { ...fn, color: col(fn.color, colors.accent) });
         for (const l of lines) {
           ctx.save();
-          ctx.strokeStyle = l.color || colors.text;
+          ctx.strokeStyle = col(l.color, colors.text);
           ctx.lineWidth = l.width || 2;
           if (l.dash) ctx.setLineDash(l.dash);
           ctx.globalAlpha = l.alpha ?? 1;
@@ -192,7 +196,7 @@ export default function Plot({
           const [px, py] = view.toPx(p.x, p.y);
           ctx.save();
           if (p.ring) {
-            ctx.strokeStyle = p.color || colors.accent;
+            ctx.strokeStyle = col(p.color, colors.accent);
             ctx.globalAlpha = 0.35;
             ctx.lineWidth = 6;
             ctx.beginPath();
@@ -200,7 +204,7 @@ export default function Plot({
             ctx.stroke();
             ctx.globalAlpha = 1;
           }
-          ctx.fillStyle = p.color || colors.accent;
+          ctx.fillStyle = col(p.color, colors.accent);
           ctx.strokeStyle = colors.surface;
           ctx.lineWidth = 2.5;
           ctx.beginPath();
@@ -214,6 +218,19 @@ export default function Plot({
             ctx.fillText(p.label, px, py - (p.r || 7) - 8);
           }
           ctx.restore();
+        }
+        if (xLabel || yLabel) {
+          const [ox, oy] = view.toPx(0, 0);
+          ctx.fillStyle = colors.muted;
+          ctx.font = `12px ${FONT}`;
+          if (xLabel) {
+            ctx.textAlign = 'right';
+            ctx.fillText(xLabel, width - 8, Math.min(Math.max(oy - 8, 14), h - 6));
+          }
+          if (yLabel) {
+            ctx.textAlign = 'left';
+            ctx.fillText(yLabel, Math.min(Math.max(ox + 8, 8), width - 120), 16);
+          }
         }
         draw?.(ctx, view);
       }}

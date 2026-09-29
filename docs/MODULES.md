@@ -35,6 +35,13 @@ Plays a soft click sound on press.
 
 Glassmorphism card — the basic surface of the UI.
 
+### Checklist
+
+`src/components/Checklist.jsx`
+
+Mini-objective list. Items tick with a pop when `done` becomes true —
+small wins inside a step keep momentum up.
+
 ### Choices
 
 `src/components/Choices.jsx`
@@ -62,6 +69,12 @@ drawing is enabled; strokes survive toggling and are wiped by `clearSignal`.
 
 Instant feedback after every answer: "+14 XP · 3× combo" or "Not quite — try again".
 Driven by `state.lastGain`, so any step that calls `api.answer()` gets it for free.
+
+### Frac
+
+`src/components/Frac.jsx`
+
+Stacked fraction for use inside <M>: <Frac top="Δy" bottom="Δx" />.
 
 ### HintButton
 
@@ -110,6 +123,7 @@ Declarative props describe what to draw in *world* coordinates:
   points — [{ x, y, color, r, label, ring }]
   lines  — [{ x1, y1, x2, y2, color, width, dash }]
 plus an optional `draw(ctx, view)` escape hatch for custom art.
+Colours may be CSS colours or theme keys ('accent', 's1'…'s5', 'good', 'bad', 'muted'…).
 `onPointer(type, {x, y, px, py}, dragging)` reports pointer events in world units.
 
 ### ProgressBar
@@ -117,6 +131,12 @@ plus an optional `draw(ctx, view)` escape hatch for custom art.
 `src/components/ProgressBar.jsx`
 
 Animated horizontal progress bar (value 0–1).
+
+### Readout
+
+`src/components/Readout.jsx`
+
+Row of labelled live numbers ("time 3.2 s · speed 12 m/s").
 
 ### Slider
 
@@ -286,6 +306,168 @@ Reads the design-token colours from CSS custom properties so canvas drawings
 match the current light/dark theme. Recomputes whenever the theme changes.
 
 ## `src/levels`
+
+### GraphSculptor/SculptStep
+
+`src/levels/GraphSculptor/SculptStep.jsx`
+
+Generic Graph Sculptor step driven by a config object:
+an optional prediction question, then one or more sculpting challenges
+(each with its own target), then the insight and the equation reveal.
+
+### GraphSculptor/Sculptor
+
+`src/levels/GraphSculptor/Sculptor.jsx`
+
+The sculpting table: a base curve, a dashed target "ghost", and plain-language
+controls (no symbols until the player has felt what each one does).
+
+The maths lives in sculptMath.js.
+Calls `onMatch` once when the player's curve matches the target.
+
+### GraphSculptor
+
+`src/levels/GraphSculptor/index.jsx`
+
+Level 3 — Graph Sculptor: transformations of functions, discovered by matching shapes.
+
+### GraphSculptor/meta
+
+`src/levels/GraphSculptor/meta.js`
+
+Level 3 metadata.
+
+### GraphSculptor/sculptMath
+
+`src/levels/GraphSculptor/sculptMath.js`
+
+Pure maths behind the Graph Sculptor: base shapes, the transformation
+y = s·a·f(t·b·x + c) + k, matching and equation formatting. React-free and unit-tested.
+
+### GraphSculptor/steps
+
+`src/levels/GraphSculptor/steps.js`
+
+Graph Sculptor step configurations. Each entry becomes one step via <SculptStep>.
+Insights stay ≤ 3 sentences; equations appear only after the shape is matched.
+
+### GrowingKingdom/DayBars
+
+`src/levels/GrowingKingdom/DayBars.jsx`
+
+Bar chart of grain per day on a linear scale. On a linear axis the early
+days vanish into nothing — which is exactly the point.
+
+### GrowingKingdom/Granary
+
+`src/levels/GrowingKingdom/Granary.jsx`
+
+The kingdom's granary: a 16×16 grid of grain sacks. When the count outgrows
+the grid, each square starts to stand for more grain (and the legend says so) —
+a visual hint that the scale itself is exploding.
+
+### GrowingKingdom/StepBase
+
+`src/levels/GrowingKingdom/StepBase.jsx`
+
+Step 5 — Meet aˣ. Only now is the formula shown. One slider controls the
+growth factor; three mini-goals lead to decay, the flat case, and finally the
+discovery of e — the base whose tangent at x = 0 has slope exactly 1.
+
+### GrowingKingdom/StepDouble
+
+`src/levels/GrowingKingdom/StepDouble.jsx`
+
+Step 1 — Day by day. The player presses "next morning" themselves and
+watches 1 → 2 → 4 → 8, then predicts day 4.
+
+### GrowingKingdom/StepMonth
+
+`src/levels/GrowingKingdom/StepMonth.jsx`
+
+Step 3 — One month. Predict day 30, then watch the counter explode.
+The bar chart shows the first ~20 days are invisible next to the last few.
+
+### GrowingKingdom/StepRace
+
+`src/levels/GrowingKingdom/StepRace.jsx`
+
+Step 4 — The race. A neighbouring kingdom starts with 100 sacks and gains
+100 every day. Drag through the days and predict when doubling wins.
+
+### GrowingKingdom/StepWeek
+
+`src/levels/GrowingKingdom/StepWeek.jsx`
+
+Step 2 — One week. Predict day 7 before fast-forwarding. The tempting
+linear guesses are there on purpose.
+
+### GrowingKingdom
+
+`src/levels/GrowingKingdom/index.jsx`
+
+Level 2 — Growing Kingdom: exponential growth, decay, and the number e.
+
+### GrowingKingdom/meta
+
+`src/levels/GrowingKingdom/meta.js`
+
+Level 2 metadata.
+
+### SpeedDetective/Road
+
+`src/levels/SpeedDetective/Road.jsx`
+
+Canvas road with a car, optional motion trail and distance markers.
+Used as a full road (live playback) or a slim "photo strip" lane.
+
+### SpeedDetective/StepReadSlopes
+
+`src/levels/SpeedDetective/StepReadSlopes.jsx`
+
+Step 4 — Read the slopes. A new trip where the car stops and reverses.
+Two quick questions build the rule: flat tangent = stopped, downhill = backwards.
+
+### SpeedDetective/StepTangent
+
+`src/levels/SpeedDetective/StepTangent.jsx`
+
+Step 2 — Steepest point. The trip becomes a position-time graph. Dragging a
+marker along it shows a tangent line and the live speedometer: the player
+discovers that steepness *is* speed, then locks in the fastest moment.
+
+### SpeedDetective/StepWatch
+
+`src/levels/SpeedDetective/StepWatch.jsx`
+
+Step 1 — Photo finish. Watch the car drive, then study four "long-exposure
+photos" and guess which moment was fastest. The trail length is the clue.
+
+### SpeedDetective/StepZoom
+
+`src/levels/SpeedDetective/StepZoom.jsx`
+
+Step 3 — Zoom in. A secant line between two moments gives an *average* speed.
+Shrinking the gap makes the secant hug the tangent, and the average settles on
+a single number. Only then is the derivative's limit notation revealed.
+
+### SpeedDetective
+
+`src/levels/SpeedDetective/index.jsx`
+
+Level 1 — The Speed Detective: speed as slope, tangents, and the derivative.
+
+### SpeedDetective/meta
+
+`src/levels/SpeedDetective/meta.js`
+
+Level 1 metadata.
+
+### SpeedDetective/trip
+
+`src/levels/SpeedDetective/trip.js`
+
+The car's journeys, as position functions of time (metres vs seconds).
 
 ### metaRegistry
 
