@@ -259,3 +259,29 @@
 .flip-toggle .icon {
   transition: transform 0.4s var(--spring);
 }
+
+/* ---------- Level 4: Light Beam ---------- */
+.beam-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+  gap: 14px;
+  align-items: start;
+}
+.stack {
+  display: grid;
+  gap: 12px;
+}
+.sketch {
+  display: grid;
+  justify-items: center;
+  gap: 4px;
+  font-size: 14px;
+}
+.sketch svg {
+  color: var(--level-accent);
+}
+@media (max-width: 800px) {
+  .beam-grid {
+    grid-template-columns: 1fr;
+  }
+}
