@@ -80,3 +80,182 @@
   letter-spacing: -0.03em;
   font-variant-numeric: tabular-nums;
 }
+
+/* ---------- Checklist ---------- */
+.checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.checklist li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  transition: all 0.3s var(--ease);
+}
+.checklist li.is-done {
+  border-color: var(--c-good);
+  background: var(--c-good-soft);
+}
+.check-box {
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  flex: none;
+  border-radius: 7px;
+  border: 2px solid var(--c-border);
+}
+.is-done .check-box {
+  background: var(--c-good);
+  border-color: var(--c-good);
+  color: #fff;
+  animation: bounce-in 0.4s var(--spring);
+}
+
+/* ---------- Math fraction ---------- */
+.frac {
+  display: inline-flex;
+  flex-direction: column;
+  vertical-align: middle;
+  text-align: center;
+  margin: 0 0.2em;
+}
+.frac > span:first-child {
+  border-bottom: 1.5px solid currentColor;
+  padding: 0 0.2em;
+}
+.lim {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  vertical-align: middle;
+  font-style: normal;
+  line-height: 1;
+  margin-right: 0.2em;
+}
+.lim small {
+  font-size: 0.45em;
+  font-style: italic;
+}
+
+.appear {
+  display: grid;
+  gap: 12px;
+  animation: fade-up 0.5s var(--ease);
+}
+
+/* ---------- Level 1: Speed Detective ---------- */
+.photo-strip {
+  display: grid;
+  gap: 8px;
+}
+.speedo {
+  height: 14px;
+  border-radius: 999px;
+  background: var(--c-accent-soft);
+  overflow: hidden;
+}
+.speedo-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--c-accent-2), var(--c-warn), var(--c-series-2));
+  transition: width 0.15s linear;
+}
+
+/* ---------- Level 2: Growing Kingdom ---------- */
+.granary {
+  display: grid;
+  gap: 12px;
+}
+.granary-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 12px;
+}
+.granary .big-number {
+  animation: bounce-in 0.4s var(--spring);
+}
+.day-log {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 6px;
+}
+.day-log li {
+  display: grid;
+  grid-template-columns: 70px 1fr auto;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  animation: fade-up 0.35s var(--ease);
+}
+.day-log span {
+  color: var(--c-muted);
+  font-size: 14px;
+}
+.day-log em {
+  font-style: normal;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--c-good);
+}
+.month-counter {
+  text-align: center;
+}
+.month-counter .big-number.is-rolling {
+  color: var(--level-accent);
+}
+
+/* ---------- Level 3: Graph Sculptor ---------- */
+.sculptor {
+  display: grid;
+  gap: 14px;
+}
+.sculptor.is-matched .stage {
+  border-color: var(--c-good);
+  box-shadow: 0 0 0 4px var(--c-good-soft);
+  transition: all 0.4s var(--ease);
+}
+.live-eq {
+  padding: 12px 18px;
+  border-radius: var(--radius);
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  text-align: center;
+  font-size: 22px;
+}
+.flip-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 52px;
+  border-radius: var(--radius);
+  border: 2px solid var(--c-border);
+  background: var(--c-surface-strong);
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+}
+.flip-toggle.is-on {
+  border-color: var(--level-accent);
+  background: color-mix(in srgb, var(--level-accent) 14%, transparent);
+  color: var(--level-accent);
+}
+.flip-toggle.is-on .icon {
+  transform: rotate(180deg);
+}
+.flip-toggle .icon {
+  transition: transform 0.4s var(--spring);
+}

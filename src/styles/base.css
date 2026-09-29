@@ -7,6 +7,7 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  background: var(--c-bg-2);
 }
 
 body {
