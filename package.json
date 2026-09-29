@@ -1,0 +1,27 @@
+{
+  "name": "transcendental-quest",
+  "private": true,
+  "version": "0.1.0",
+  "description": "An interactive, discovery-first game that teaches the intuition behind transcendental functions.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "npm run docs && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "docs": "node scripts/generate-docs.mjs",
+    "docs:check": "node scripts/generate-docs.mjs --check"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.1",
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
+  }
+}
