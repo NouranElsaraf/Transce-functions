@@ -1,7 +1,7 @@
 {
   "name": "transcendental-quest",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "An interactive, discovery-first game that teaches the intuition behind transcendental functions.",
   "type": "module",
   "scripts": {

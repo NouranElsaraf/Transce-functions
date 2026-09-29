@@ -7,6 +7,7 @@ import { useRef, useState } from 'react';
 import StepLayout from '../../components/StepLayout.jsx';
 import Button from '../../components/Button.jsx';
 import Checklist from '../../components/Checklist.jsx';
+import Slider from '../../components/Slider.jsx';
 import { useAnimationFrame } from '../../hooks/useAnimationFrame.js';
 import { clamp } from '../../core/mathUtils.js';
 import { sound } from '../../core/sound.js';
@@ -137,6 +138,17 @@ export default function StepPredict({ api }) {
             : undefined
         }
       />
+      {phase === 'guess' && (
+        <Slider
+          label="…or place the ghost with the slider"
+          value={ghost ?? 0}
+          min={-A - 5}
+          max={A + 5}
+          step={1}
+          onChange={setGhost}
+          format={(v) => (v < -2 ? 'left' : v > 2 ? 'right' : 'middle')}
+        />
+      )}
     </StepLayout>
   );
 }
