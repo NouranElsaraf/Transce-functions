@@ -25,7 +25,7 @@ The experience borrows:
 | Milestone | Scope | Status |
 |---|---|---|
 | M0 — Scaffold | Vite + React, CI, docs generator, project docs | ✅ |
-| M1 — Core engine | Game state, persistence, XP/combo/stars, achievements, sound, confetti, plotting, teacher mode, level map | ⏳ |
+| M1 — Core engine | Game state, persistence, XP/combo/stars, achievements, sound, confetti, plotting, teacher mode, level map | ✅ |
 | M2 — Calculus foundations | L1 Speed Detective, L2 Growing Kingdom, L3 Graph Sculptor | ⏳ |
 | M3 — Waves | L4 Light Beam, L5 The Swing | ⏳ |
 | M4 — Hyperbolic & finale | L6 Hyperbolic World, L7 Escape Room | ⏳ |
