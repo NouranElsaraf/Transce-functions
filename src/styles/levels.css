@@ -285,3 +285,173 @@
     grid-template-columns: 1fr;
   }
 }
+
+/* ---------- Level 7: Escape Room ---------- */
+.vault-bar {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 22px;
+}
+.vault-slot {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 64px;
+  border-radius: 16px;
+  background: var(--c-surface-strong);
+  border: 2px solid var(--c-border);
+  color: var(--c-muted);
+  transition: all 0.4s var(--ease);
+}
+.vault-slot.is-current {
+  border-color: var(--level-accent);
+  animation: pulse 1.8s var(--ease) infinite;
+}
+.vault-slot.is-open {
+  background: linear-gradient(160deg, var(--level-accent), color-mix(in srgb, var(--level-accent) 55%, #000));
+  border-color: transparent;
+  color: #fff;
+}
+.vault-digit {
+  font-size: 30px;
+  font-weight: 800;
+  animation: bounce-in 0.6s var(--spring);
+  text-shadow: 0 0 16px rgba(255, 255, 255, 0.6);
+}
+
+.jar {
+  position: relative;
+  width: 140px;
+  height: 180px;
+  margin: 0 auto 8px;
+  border: 4px solid var(--c-axis);
+  border-top-width: 10px;
+  border-radius: 18px 18px 36px 36px;
+  overflow: hidden;
+}
+.jar-fill {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 70%, #7cf5c9, var(--c-accent-2));
+  animation: jar-fill 4s var(--ease) infinite;
+  box-shadow: 0 0 30px var(--c-accent-2);
+}
+@keyframes jar-fill {
+  0% {
+    transform: translateY(99%);
+  }
+  70% {
+    transform: translateY(96%);
+  }
+  88% {
+    transform: translateY(50%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.door-scene {
+  position: relative;
+  height: 230px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: #0b1020;
+  border: 1px solid var(--c-border);
+}
+.door-light {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, #fff7d6, #ffcf4d 30%, transparent 70%);
+  opacity: 0;
+  transition: opacity 1.2s var(--ease) 0.4s;
+}
+.door {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50%;
+  background: repeating-linear-gradient(90deg, #38415a 0 2px, #2a3147 2px 26px);
+  transition: transform 1.4s var(--ease);
+}
+.door-left {
+  left: 0;
+  border-right: 2px solid #111;
+}
+.door-right {
+  right: 0;
+  border-left: 2px solid #111;
+}
+.door-wheel {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 84px;
+  height: 84px;
+  margin: -42px 0 0 -42px;
+  border-radius: 50%;
+  border: 8px solid #9aa4bf;
+  box-shadow: inset 0 0 0 10px #2a3147, 0 0 0 4px #111;
+  transition: transform 1s var(--ease), opacity 0.6s 0.8s;
+}
+.door-scene.is-open .door-left {
+  transform: translateX(-100%);
+}
+.door-scene.is-open .door-right {
+  transform: translateX(100%);
+}
+.door-scene.is-open .door-wheel {
+  transform: rotate(540deg);
+  opacity: 0;
+}
+.door-scene.is-open .door-light {
+  opacity: 1;
+}
+
+.keypad-wrap {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+}
+.keypad-display {
+  display: flex;
+  gap: 10px;
+  font-size: 30px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+}
+.keypad-display span {
+  display: grid;
+  place-items: center;
+  width: 46px;
+  height: 56px;
+  border-radius: 12px;
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+}
+.keypad-display[data-shake='true'] {
+  animation: shake 0.45s;
+}
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 72px);
+  gap: 10px;
+}
+.key {
+  height: 60px;
+  border-radius: 16px;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface-strong);
+  font-size: 22px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s var(--spring);
+}
+.key:active {
+  transform: scale(0.92);
+}
+.key-enter {
+  background: var(--level-accent);
+  color: #fff;
+}

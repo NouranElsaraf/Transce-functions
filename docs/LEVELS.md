@@ -9,6 +9,8 @@
 | 3 | Graph Sculptor | Graph intuition | 5 | ~8 min |
 | 4 | Light Beam | Trigonometric functions | 5 | ~9 min |
 | 5 | The Swing | Periodic motion | 4 | ~8 min |
+| 6 | Hyperbolic World | Hyperbolic functions | 4 | ~9 min |
+| 7 | Escape Room | Everything together | 6 | ~8 min |
 
 ## 1. The Speed Detective
 
@@ -77,4 +79,32 @@
 2. **Pen on paper** — Recognise the swing’s angle-time graph as a cosine wave.
 3. **Longer rope** — Discover that period depends on length but not amplitude.
 4. **Forecast** — Use periodicity to predict a far-future position.
+
+## 6. Hyperbolic World
+
+> Hang a chain. It is not a parabola — so what is it?
+
+**Big idea:** A hanging chain is y = cosh x = (eˣ + e⁻ˣ)/2. Hyperbolic functions mirror trig functions — circle vs hyperbola, cos² + sin² = 1 vs cosh² − sinh² = 1 — but grow like exponentials instead of repeating.
+
+**Steps**
+
+1. **Hang a chain** — Test parabola, circle and a mystery curve against a real hanging chain.
+2. **Build cosh** — Construct cosh and sinh by mixing eˣ and e⁻ˣ.
+3. **Circle vs hyperbola** — Compare (cos t, sin t) on a circle with (cosh t, sinh t) on a hyperbola.
+4. **Chains, bridges & arches** — Tell catenaries from parabolas in real structures.
+
+## 7. Escape Room
+
+> Five locks. No formulas. Only what you have noticed.
+
+**Big idea:** Slopes, exponential growth, transformations, periodic waves and hanging chains are not five topics — they are one toolkit for reading how things change.
+
+**Steps**
+
+1. **Lock 1 · Flat spot** — Find where a curve’s tangent is horizontal.
+2. **Lock 2 · The jar** — Reason backwards through exponential doubling.
+3. **Lock 3 · Shape key** — Rebuild a transformed graph.
+4. **Lock 4 · Signal** — Read the period of a wave.
+5. **Lock 5 · Which curve?** — Identify cosh by its behaviour.
+6. **The door** — Enter the code and escape.
 

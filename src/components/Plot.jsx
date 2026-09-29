@@ -16,11 +16,23 @@ import Stage from './Stage.jsx';
 export const FONT = '-apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, "Segoe UI", Roboto, sans-serif';
 
 /** Build a world↔pixel transform for a canvas of the given size. */
-export function makeView(xRange, yRange, width, height, pad = 0) {
-  const [x0, x1] = xRange;
-  const [y0, y1] = yRange;
-  const sx = (width - 2 * pad) / (x1 - x0);
-  const sy = (height - 2 * pad) / (y1 - y0);
+export function makeView(xRange, yRange, width, height, pad = 0, equal = false) {
+  let [x0, x1] = xRange;
+  let [y0, y1] = yRange;
+  let sx = (width - 2 * pad) / (x1 - x0);
+  let sy = (height - 2 * pad) / (y1 - y0);
+  if (equal) {
+    // Same scale on both axes: widen whichever range has spare room, keeping it centred.
+    const k = Math.min(sx, sy);
+    const cx = (x0 + x1) / 2;
+    const cy = (y0 + y1) / 2;
+    const hw = (width - 2 * pad) / k / 2;
+    const hh = (height - 2 * pad) / k / 2;
+    [x0, x1, y0, y1] = [cx - hw, cx + hw, cy - hh, cy + hh];
+    sx = sy = k;
+  }
+  xRange = [x0, x1];
+  yRange = [y0, y1];
   return {
     x: xRange,
     y: yRange,
@@ -156,11 +168,12 @@ export default function Plot({
   ariaLabel = 'Graph',
   cursor,
   className,
+  equal = false,
 }) {
   const handler = (type) =>
     onPointer
       ? (p, e, dragging) => {
-          const view = makeView(x, y, p.width, p.height);
+          const view = makeView(x, y, p.width, p.height, 0, equal);
           onPointer(type, { ...view.toWorld(p.px, p.py), px: p.px, py: p.py }, dragging, e);
         }
       : undefined;
@@ -175,7 +188,7 @@ export default function Plot({
       onPointerMove={handler('move')}
       onPointerUp={handler('up')}
       draw={(ctx, { width, height: h, colors }) => {
-        const view = { ...makeView(x, y, width, h), colors };
+        const view = { ...makeView(x, y, width, h, 0, equal), colors };
         const col = (c, fallback) => (c && colors[c]) || c || fallback;
         underlay?.(ctx, view);
         drawGrid(ctx, view, colors, { grid, axes, ticks });

@@ -314,6 +314,80 @@ match the current light/dark theme. Recomputes whenever the theme changes.
 
 ## `src/levels`
 
+### EscapeRoom/LockChain
+
+`src/levels/EscapeRoom/LockChain.jsx`
+
+Lock 5 — Which curve? Three look-alikes near the middle; only one fits the
+riddle's behaviour far from it: cosh.
+
+### EscapeRoom/LockDoor
+
+`src/levels/EscapeRoom/LockDoor.jsx`
+
+The door. Type the five collected digits on the keypad. A wrong code shakes;
+the right one swings the vault open, fires confetti and shows the escape time.
+
+### EscapeRoom/LockFrame
+
+`src/levels/EscapeRoom/LockFrame.jsx`
+
+Shared frame for every lock: the vault strip on top, then a normal StepLayout.
+When the lock opens, its digit is revealed in the strip.
+
+### EscapeRoom/LockJar
+
+`src/levels/EscapeRoom/LockJar.jsx`
+
+Lock 2 — The jar. A classic doubling riddle solved by thinking backwards.
+
+### EscapeRoom/LockShape
+
+`src/levels/EscapeRoom/LockShape.jsx`
+
+Lock 3 — Shape key. Reuses the Graph Sculptor table with every control:
+rebuild y = 2(x + 1)² − 2.
+
+### EscapeRoom/LockTangent
+
+`src/levels/EscapeRoom/LockTangent.jsx`
+
+Lock 1 — Flat spot. Drag a probe along the curve and lock it in where the
+tangent is perfectly horizontal (either turning point works).
+
+### EscapeRoom/LockWave
+
+`src/levels/EscapeRoom/LockWave.jsx`
+
+Lock 4 — Signal. Read a mystery wave's period straight off the graph.
+
+### EscapeRoom/VaultBar
+
+`src/levels/EscapeRoom/VaultBar.jsx`
+
+The vault's lock strip: solved locks show their glowing digit, the current
+lock pulses, the rest stay dark. `solved` counts locks opened so far.
+
+### EscapeRoom
+
+`src/levels/EscapeRoom/index.jsx`
+
+Level 7 — Escape Room: five locks that each need one earlier insight,
+then a keypad door whose code turns out to be e.
+
+### EscapeRoom/meta
+
+`src/levels/EscapeRoom/meta.js`
+
+Level 7 metadata.
+
+### EscapeRoom/vault
+
+`src/levels/EscapeRoom/vault.js`
+
+Vault state shared by the Escape Room's steps: the code digits (e ≈ 2.7182…)
+and a clock started when Lock 1 opens its screen.
+
 ### GraphSculptor/SculptStep
 
 `src/levels/GraphSculptor/SculptStep.jsx`
@@ -420,6 +494,57 @@ Level 2 — Growing Kingdom: exponential growth, decay, and the number e.
 `src/levels/GrowingKingdom/meta.js`
 
 Level 2 metadata.
+
+### HyperbolicWorld/StepBridge
+
+`src/levels/HyperbolicWorld/StepBridge.jsx`
+
+Step 4 — Chains, bridges & arches. Two real-world structures, two quick
+calls: a suspension bridge cable (parabola!) and an upside-down chain arch.
+
+### HyperbolicWorld/StepBuild
+
+`src/levels/HyperbolicWorld/StepBuild.jsx`
+
+Step 2 — Build cosh. Two ingredients the player already knows: growth eˣ and
+decay e⁻ˣ. Mix them with two sliders to match the chain (cosh), then sinh.
+
+### HyperbolicWorld/StepChain
+
+`src/levels/HyperbolicWorld/StepChain.jsx`
+
+Step 1 — Hang a chain. Drag the posts (or use the slider); the chain settles
+with a gentle sway. Then test three candidate curves against it: each pick
+draws its overlay, so wrong answers are *visibly* wrong.
+
+### HyperbolicWorld/StepCircle
+
+`src/levels/HyperbolicWorld/StepCircle.jsx`
+
+Step 3 — Circle vs hyperbola. One slider t drives two points:
+(cos t, sin t) on the unit circle and (cosh t, sinh t) on x² − y² = 1.
+Shaded sectors have equal area t/2 in both worlds; live readouts let the
+player discover which combination stays constant.
+
+### HyperbolicWorld/catenary
+
+`src/levels/HyperbolicWorld/catenary.js`
+
+Hanging-chain geometry. Posts sit at x = ±span/2, height 0; the chain has a
+fixed length. Pure functions, unit-tested.
+
+### HyperbolicWorld
+
+`src/levels/HyperbolicWorld/index.jsx`
+
+Level 6 — Hyperbolic World: the catenary, cosh/sinh from exponentials,
+and the circle/hyperbola analogy with trig functions.
+
+### HyperbolicWorld/meta
+
+`src/levels/HyperbolicWorld/meta.js`
+
+Level 6 metadata.
 
 ### LightBeam/BeamScene
 
