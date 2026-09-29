@@ -4,3 +4,332 @@
 
 Every documented source file, grouped by folder. Add a `/** ... @module Name */` block at the top of a file to have it appear here.
 
+## `src/`
+
+### App
+
+`src/App.jsx`
+
+Application shell: a tiny screen router (map ↔ level) plus global overlays —
+top bar, instant-feedback pill, toasts, the teacher panel and ink layer.
+The current screen is mirrored into the URL hash so refresh/back work.
+
+### main
+
+`src/main.jsx`
+
+Entry point: mounts <App> inside the game state provider and loads styles.
+
+## `src/components`
+
+### Button
+
+`src/components/Button.jsx`
+
+Large, rounded button with variants: primary · secondary · ghost · success.
+Plays a soft click sound on press.
+
+### Card
+
+`src/components/Card.jsx`
+
+Glassmorphism card — the basic surface of the UI.
+
+### Choices
+
+`src/components/Choices.jsx`
+
+Multiple-choice predictor.
+
+Wrong picks shake, reveal their optional `why`, and lock so the player can try again;
+the right pick glows and calls `onSolved`. Scoring goes through the step API,
+so combos and stars "just work".
+
+  <Choices api={api} correct="b" onSolved={() => setDone(true)}
+           options={[{ id: 'a', label: '4', why: 'That would be adding 2…' }, …]} />
+
+### DrawingOverlay
+
+`src/components/DrawingOverlay.jsx`
+
+Teacher Mode ink layer: a transparent full-screen canvas the instructor can
+draw on (over graphs, animations, anything). Only captures the pointer while
+drawing is enabled; strokes survive toggling and are wiped by `clearSignal`.
+
+### FeedbackPill
+
+`src/components/FeedbackPill.jsx`
+
+Instant feedback after every answer: "+14 XP · 3× combo" or "Not quite — try again".
+Driven by `state.lastGain`, so any step that calls `api.answer()` gets it for free.
+
+### HintButton
+
+`src/components/HintButton.jsx`
+
+Reveal-on-demand hint. The first reveal registers a hint (costs a star);
+the text then stays visible.
+
+### Icon
+
+`src/components/Icon.jsx`
+
+Minimal stroke icon set (24×24, currentColor). Hand-drawn paths keep the
+bundle dependency-free and give the UI a consistent, calm line style.
+
+### Insight
+
+`src/components/Insight.jsx`
+
+The "I noticed…" card that appears *after* an interaction.
+Keep `children` to 2–3 sentences; `formula` is revealed underneath with a flourish.
+
+### LevelComplete
+
+`src/components/LevelComplete.jsx`
+
+End-of-level celebration: animated stars, XP earned, the big idea recap and
+the next action (next level · replay · map).
+
+### MathText
+
+`src/components/MathText.jsx`
+
+Inline math typography: `<M>y = a<sup>x</sup></M>`.
+Uses a serif italic face so formulas feel distinct from UI text.
+`block` renders it centred on its own line with a gentle reveal animation.
+
+### Plot
+
+`src/components/Plot.jsx`
+
+Function plotter built on <Stage>.
+
+Declarative props describe what to draw in *world* coordinates:
+  fns    — [{ f, color, width, dash, domain, glow }]
+  points — [{ x, y, color, r, label, ring }]
+  lines  — [{ x1, y1, x2, y2, color, width, dash }]
+plus an optional `draw(ctx, view)` escape hatch for custom art.
+`onPointer(type, {x, y, px, py}, dragging)` reports pointer events in world units.
+
+### ProgressBar
+
+`src/components/ProgressBar.jsx`
+
+Animated horizontal progress bar (value 0–1).
+
+### Slider
+
+`src/components/Slider.jsx`
+
+Labelled range slider with a live value bubble.
+Set `hideValue` when the number itself would give away an answer.
+
+### Stage
+
+`src/components/Stage.jsx`
+
+Responsive, high-DPI canvas.
+
+The parent supplies a `draw(ctx, info)` function; it runs after every render and
+whenever the canvas resizes, so animating is as simple as updating React state.
+Pointer handlers receive coordinates in CSS pixels relative to the canvas.
+
+### Stars
+
+`src/components/Stars.jsx`
+
+0–3 star display; `animate` pops them in one by one.
+
+### StepDots
+
+`src/components/StepDots.jsx`
+
+Row of dots showing progress through a level's steps.
+Completed dots fill, the current one pulses. Teacher mode makes them clickable.
+
+### StepLayout
+
+`src/components/StepLayout.jsx`
+
+Standard frame for a step: prompt → interactive stage → insight → continue.
+
+Steps only decide *when* they are `done`; the layout handles hints,
+teacher "reveal" mode and the Continue button so every step feels consistent.
+
+### TeacherPanel
+
+`src/components/TeacherPanel.jsx`
+
+Floating control panel for instructors.
+
+ - Pause / resume every animation in the app
+ - Draw on top of anything (ink overlay) and clear it
+ - Reveal explanations instantly (and skip steps)
+ - Skip the current level, jump to any step (via the step dots)
+ - Reset all progress
+
+Teacher mode also unlocks every level on the map.
+
+### ToastStack
+
+`src/components/ToastStack.jsx`
+
+Stack of transient notifications (achievements, milestones).
+
+### TopBar
+
+`src/components/TopBar.jsx`
+
+Global header: brand, XP & rank, combo streak, stars and the settings toggles
+(sound, theme, teacher mode).
+
+## `src/core`
+
+### GameContext
+
+`src/core/GameContext.jsx`
+
+React glue around the game reducer.
+
+Responsibilities:
+ - hydrate state from localStorage and persist changes
+ - apply the resolved theme to <html data-theme>
+ - keep the sound engine in sync with the sound setting
+ - evaluate achievements after every change and surface toasts
+ - expose friendly action helpers (`answer`, `hint`, `completeLevel`, …)
+
+### achievements
+
+`src/core/achievements.js`
+
+Achievement catalogue.
+
+Each achievement has a pure `check(state)` predicate. After every state change the
+GameContext evaluates the locked ones and unlocks whatever became true — so adding a
+new achievement is just adding an object here.
+
+### confetti
+
+`src/core/confetti.js`
+
+Lightweight canvas confetti. Creates a temporary full-screen canvas,
+animates a burst of particles and removes itself when finished.
+Honours `prefers-reduced-motion` by drastically reducing the burst.
+
+### gameReducer
+
+`src/core/gameReducer.js`
+
+The game's single source of truth.
+
+A plain reducer (no React) so every rule — combos, stars, unlocking, resets —
+is unit-testable. Persistent progress and transient session data live side by side;
+`persistable()` strips what must not be saved (teacher tools, the current run).
+
+### mathUtils
+
+`src/core/mathUtils.js`
+
+Small numeric helpers shared by the levels.
+
+### scoring
+
+`src/core/scoring.js`
+
+Scoring rules: XP, combo bonus, stars and player ranks.
+
+Kept pure so balancing the game is a matter of editing numbers here
+(and the unit tests tell you if you broke something).
+
+### sound
+
+`src/core/sound.js`
+
+Tiny Web Audio synthesiser — every sound effect is generated in code,
+so the game ships with zero audio files and works offline.
+
+Call `sound.setEnabled(false)` to mute; `sound.play(name)` is always safe to call.
+
+### storage
+
+`src/core/storage.js`
+
+Safe wrapper around localStorage.
+
+Private windows, blocked cookies or quota errors must never crash the game,
+so every access is guarded and falls back to in-memory defaults.
+
+## `src/hooks`
+
+### useAnimationFrame
+
+`src/hooks/useAnimationFrame.js`
+
+requestAnimationFrame loop that respects Teacher-mode pause.
+
+`callback(dt, elapsed)` receives seconds since the last frame (clamped so a
+backgrounded tab doesn't cause a giant jump) and total running seconds.
+While paused or inactive, time does not advance.
+
+### useElementSize
+
+`src/hooks/useElementSize.js`
+
+Tracks an element's content-box size with ResizeObserver.
+
+### useThemeColors
+
+`src/hooks/useThemeColors.js`
+
+Reads the design-token colours from CSS custom properties so canvas drawings
+match the current light/dark theme. Recomputes whenever the theme changes.
+
+## `src/levels`
+
+### metaRegistry
+
+`src/levels/metaRegistry.js`
+
+Ordered list of level metadata (plain data, no components).
+
+Split from the component registry so core logic (achievements, unlocking)
+can know about levels without importing any React code.
+
+### registry
+
+`src/levels/registry.js`
+
+Ordered registry of playable levels: `{ meta, steps }` objects.
+Add a level by creating its folder and appending it here and in metaRegistry.js.
+
+### types
+
+`src/levels/types.js`
+
+Shared JSDoc type definitions for levels. No runtime code.
+
+A level is a folder in `src/levels/` with:
+  - `meta.js`   — a {@link LevelMeta} object (also read by the docs generator)
+  - `index.jsx` — exports `{ meta, steps }` where `steps[i]` renders `meta.steps[i]`
+
+Every step component receives a {@link StepAPI} as its `api` prop.
+
+## `src/screens`
+
+### Home
+
+`src/screens/Home.jsx`
+
+The map: hero with a single obvious "continue" action, the level path,
+the achievement shelf and — once everything is solved — the certificate.
+
+### LevelScreen
+
+`src/screens/LevelScreen.jsx`
+
+Runs one level: shows the header (title, step dots, progress), renders the
+current step with its StepAPI, and shows the completion modal at the end.
+
+Also registers `skipStep` / `skipLevel` handlers for the Teacher panel.
+
