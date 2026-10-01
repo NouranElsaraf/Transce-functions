@@ -21,9 +21,31 @@
 **Steps**
 
 1. **Photo finish** — Notice that "fast" means covering more distance in the same time.
+   - *Ask yourself:* Every photo lasts exactly the same time. So what is different between them?
 2. **Steepest point** — Connect speed with the steepness (slope) of the position-time graph.
+   - *Ask yourself:* Watch the line that touches the curve. What does it look like when the car is fast? When it is slow?
 3. **Zoom in** — Watch average speed over a shrinking gap settle on one number: the derivative.
+   - *Ask yourself:* As the gap gets tiny, does the average-speed number keep changing, or does it settle?
 4. **Read the slopes** — Flat tangent = stopped, downhill tangent = moving backwards.
+   - *Ask yourself:* Can you tell the whole story of the trip from the shape of the graph alone?
+
+**🌍 Where we see it**
+
+- Speedometers and fitness watches estimate your speed from how your position changes every fraction of a second.
+- When Google Maps says “traffic is slowing down”, it is describing a rate of change.
+- Your phone battery dropping 10% per hour is a rate of change too.
+
+**👷 How engineers use it**
+
+- Civil: the slope of a road or ramp (rise over run) decides whether a loaded truck can climb it safely.
+- Electrical: current is the rate of change of charge, i = dq/dt.
+- Mechanical: acceleration (rate of change of velocity) is what brakes, airbags and seatbelts are designed around.
+
+**⚠️ Common mistakes**
+
+- *“Fastest” means furthest along the road.* Position is not speed. The car in photo D is furthest, but it is barely moving. Speed is how fast the position changes.
+- *A high point on the graph means high speed.* Height on a position graph is position. Steepness is speed. At the top of a hill the speed is zero.
+- *The derivative is just putting h = 0 into the formula.* With h = 0 you get 0/0, which means nothing. The derivative is the number the ratio heads towards as h gets closer and closer to 0.
 
 ## 2. Growing Kingdom
 
@@ -34,10 +56,33 @@
 **Steps**
 
 1. **Day by day** — Experience doubling one step at a time and predict the next day.
+   - *Ask yourself:* How big is the jump from one day to the next? Is it always the same?
 2. **One week** — Notice doubling beats the "add a bit each day" instinct.
+   - *Ask yourself:* Your gut wants to add. Does adding match what you just saw?
 3. **One month** — Feel the explosion: each day outgrows all previous days combined.
+   - *Ask yourself:* Before the counter runs: how big do you think this can get in just 30 days?
 4. **The race** — Exponential growth eventually overtakes any linear growth.
+   - *Ask yourself:* Who is winning at the start? Will that stay true forever?
 5. **Meet aˣ** — Connect the story to y = aˣ, see decay, and discover e.
+   - *Ask yourself:* What happens to the curve when the factor is below 1? Exactly 1?
+
+**🌍 Where we see it**
+
+- Compound interest on savings or loans: you earn interest on your interest.
+- A video going viral: every viewer shares it with a few more people.
+- Hot tea cooling down: it loses heat fastest when it is hottest.
+
+**👷 How engineers use it**
+
+- Electrical: RC circuits charge and discharge exponentially. That is how timers and camera flashes work.
+- Chemical and nuclear: reaction and decay rates, and carbon dating.
+- Mechanical: shock absorbers make vibrations die out inside an exponentially shrinking envelope.
+
+**⚠️ Common mistakes**
+
+- *Doubling 30 times is about 2 × 30 = 60.* That is multiplying by 30. Doubling 30 times is 2³⁰ ≈ 1 billion: repeated multiplication, not repeated addition.
+- *Steady growth with a big head start stays ahead forever.* Any exponential growth (factor above 1) eventually beats any linear growth, whatever the head start.
+- *aˣ with a between 0 and 1 becomes negative.* It stays positive and shrinks towards zero without reaching it. That is exponential decay.
 
 ## 3. Graph Sculptor
 
@@ -48,10 +93,33 @@
 **Steps**
 
 1. **Lift** — Adding to the output shifts the graph vertically.
+   - *Ask yourself:* Only one control. Before touching it, what do you expect it to do to the whole curve?
 2. **Slide** — Adding to the input shifts the graph horizontally — in the opposite direction.
+   - *Ask yourself:* Predict first: adding 3 to x, does the bowl move left or right? Commit before you test.
 3. **Stretch & squeeze** — Multiplying outside stretches vertically; inside compresses horizontally.
+   - *Ask yourself:* Which control changes the height, and which changes how often the wave repeats?
 4. **Mirror** — A minus outside reflects across the x-axis; inside reflects across the y-axis.
+   - *Ask yourself:* What is the difference between flipping the result and flipping x?
 5. **Master** — Combine all moves and read them off y = a·f(bx + c) + k.
+   - *Ask yourself:* Which moves change heights, and which change where things happen?
+
+**🌍 Where we see it**
+
+- Photo editing apps shift, scale and flip images: the same transformations, applied to pixels.
+- Time zones: the same daily cycle, shifted left or right.
+- A music player’s volume and speed controls stretch a sound wave vertically or horizontally.
+
+**👷 How engineers use it**
+
+- Calibration: correcting a sensor’s offset (+k) and gain (×a).
+- Signals: delays, phase shifts and frequency scaling in communication systems.
+- Structures: shifting and scaling a standard load curve to fit a particular bridge or building.
+
+**⚠️ Common mistakes**
+
+- *f(x + 3) moves the graph to the right.* It moves left: whatever used to happen at x = 0 now happens at x = −3.
+- *2·f(x) and f(2x) are the same thing.* 2·f(x) is twice as tall; f(2x) is squeezed sideways. Outside acts on heights, inside acts on x.
+- *f(2x) stretches the graph wider.* It squeezes it: every height is reached at half the x. Multiplying inside works backwards, just like adding inside.
 
 ## 4. Light Beam
 
@@ -62,10 +130,33 @@
 **Steps**
 
 1. **Aim** — Link an angle of rotation to a position on the circle.
+   - *Ask yourself:* Where does 0° start, and which way do angles turn?
 2. **Height of the spot** — Find where the spot is highest, lowest and level: the values of sine.
+   - *Ask yourself:* What is the highest the spot can go? Where is its height exactly zero?
 3. **Draw the wave** — See the height trace a sine wave that repeats every 360°.
+   - *Ask yourself:* As the light spins, what shape will the height draw?
 4. **The floor shadow** — Discover cosine as the same wave shifted a quarter turn.
+   - *Ask yourself:* Compare the two waves at 0°. What is the same, and what is different?
 5. **Tune the wave** — Control amplitude and frequency: y = A·sin(kθ).
+   - *Ask yourself:* Which slider changes the height of the wave, and which changes how many waves fit in 360°?
+
+**🌍 Where we see it**
+
+- Ferris wheels, bicycle pedals and clock hands: circular motion seen from the side is a sine wave.
+- Sound and music: every note is built from sine waves.
+- Seasons and day length repeat every year, a periodic pattern.
+
+**👷 How engineers use it**
+
+- Electrical: mains power in Egypt is a 50 Hz sine wave, V = V₀·sin(2π·50·t).
+- Mechanical: crank–piston engines and the vibration of rotating machines.
+- Communications: radio, Wi-Fi and mobile signals are modulated sine waves.
+
+**⚠️ Common mistakes**
+
+- *sin is a calculator button or a table to memorise.* sin θ is a height: how high a point on a circle of radius 1 is after turning θ. The table just records those heights.
+- *Sine and cosine are unrelated functions.* They are the same wave, 90° apart: cos θ = sin(θ + 90°).
+- *sin(2θ) is twice as tall as sin θ.* The 2 inside makes it repeat twice as fast. 2·sin θ is the one that is twice as tall.
 
 ## 5. The Swing
 
@@ -76,9 +167,31 @@
 **Steps**
 
 1. **Where will it be?** — Use half and quarter swings to predict position in time.
+   - *Ask yourself:* In one full swing it goes right → left → right. Where is it halfway through?
 2. **Pen on paper** — Recognise the swing’s angle-time graph as a cosine wave.
+   - *Ask yourself:* Where does the trace start at t = 0, in the middle or at the top?
 3. **Longer rope** — Discover that period depends on length but not amplitude.
+   - *Ask yourself:* Predict before you slide: does a longer rope swing faster or slower? By how much?
 4. **Forecast** — Use periodicity to predict a far-future position.
+   - *Ask yourself:* Do you really need to simulate 7.5 seconds? What does the pattern tell you?
+
+**🌍 Where we see it**
+
+- Playground swings and swaying ceiling lamps.
+- Metronomes and old pendulum clocks keep time with a fixed period.
+- Your legs swing like pendulums when you walk, which is why tall people take slower strides.
+
+**👷 How engineers use it**
+
+- Civil: tuned mass dampers (like the giant ball in Taipei 101) cancel a tower’s sway in wind and earthquakes.
+- Mechanical: suspensions and machine mounts are designed to avoid resonance.
+- Electrical: LC circuits oscillate exactly like pendulums; they are at the heart of radio tuners.
+
+**⚠️ Common mistakes**
+
+- *A heavier bob or a bigger push makes it swing faster.* For small swings the period depends only on the length (and gravity), not on the mass or the amplitude.
+- *4× the length means 4× the time.* The period grows with the square root of the length: 4× the length gives 2× the time.
+- *The pendulum is fastest at the ends of its swing.* It stops for an instant at the ends and is fastest at the bottom, exactly where the angle graph is steepest.
 
 ## 6. Hyperbolic World
 
@@ -89,9 +202,31 @@
 **Steps**
 
 1. **Hang a chain** — Test parabola, circle and a mystery curve against a real hanging chain.
+   - *Ask yourself:* Move the posts. Does the chain keep the same kind of shape?
 2. **Build cosh** — Construct cosh and sinh by mixing eˣ and e⁻ˣ.
+   - *Ask yourself:* Which mix makes a symmetric U? Which makes an S?
 3. **Circle vs hyperbola** — Compare (cos t, sin t) on a circle with (cosh t, sinh t) on a hyperbola.
+   - *Ask yourself:* Push t to both extremes. Which point ever comes back?
 4. **Chains, bridges & arches** — Tell catenaries from parabolas in real structures.
+   - *Ask yourself:* Where does the weight sit: on the cable itself, or on the road below it?
+
+**🌍 Where we see it**
+
+- Power and telephone lines sagging between poles.
+- Necklaces and spider-web threads hang as catenaries.
+- The Gateway Arch in St. Louis is an upside-down catenary.
+
+**👷 How engineers use it**
+
+- Electrical: sag and tension calculations for overhead transmission lines use cosh.
+- Civil and architecture: catenary arches and domes carry load in pure compression with no bending. Gaudí designed his churches this way.
+- Mechanical: heat flow along cooling fins and shafts is written with cosh and sinh.
+
+**⚠️ Common mistakes**
+
+- *A hanging chain is a parabola.* It is close near the bottom but wrong near the supports. A chain carrying only its own weight is a catenary, y = a·cosh(x/a).
+- *cosh and sinh are cos and sin with an h, so they repeat too.* They never repeat. They are built from eˣ and e⁻ˣ, so they grow without limit.
+- *cosh² + sinh² = 1, just like trig.* It is a minus: cosh² − sinh² = 1, because the point lives on a hyperbola, not a circle.
 
 ## 7. Escape Room
 
@@ -102,9 +237,33 @@
 **Steps**
 
 1. **Lock 1 · Flat spot** — Find where a curve’s tangent is horizontal.
+   - *Ask yourself:* What does “flat” mean for the rate of change?
 2. **Lock 2 · The jar** — Reason backwards through exponential doubling.
+   - *Ask yourself:* Run the clock backwards: what does one doubling undo into?
 3. **Lock 3 · Shape key** — Rebuild a transformed graph.
+   - *Ask yourself:* Which changes act on heights, and which act on x?
 4. **Lock 4 · Signal** — Read the period of a wave.
+   - *Ask yourself:* Find a peak. Where is the next identical one?
 5. **Lock 5 · Which curve?** — Identify cosh by its behaviour.
+   - *Ask yourself:* Near the middle they all look alike. What happens far out?
 6. **The door** — Enter the code and escape.
+   - *Ask yourself:* Read the digits off the lock strip. Do they remind you of a famous number?
+
+**🌍 Where we see it**
+
+- Every lock used an idea from the real world: braking cars, spreading rumours, signals, hanging cables.
+- Finding where the slope is zero is how apps find the cheapest flight or the shortest route.
+- Doubling riddles are how epidemiologists warn about an outbreak before it looks big.
+
+**👷 How engineers use it**
+
+- Optimisation: engineers set the derivative to zero to minimise material, cost or energy.
+- System identification: reading period, amplitude and growth rate off measured signals.
+- Choosing the right model: periodic (trig), growing or decaying (exponential), hanging or sagging (hyperbolic).
+
+**⚠️ Common mistakes**
+
+- *Zero slope always means a maximum.* It can be a maximum, a minimum or a flat pause. Check what the curve does on each side.
+- *Half full means half the time.* With doubling, half full is just one step before full.
+- *Peak to valley is one period.* A period runs between two points doing the same thing in the same direction: peak to peak, not peak to valley.
 

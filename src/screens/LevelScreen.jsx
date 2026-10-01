@@ -11,6 +11,8 @@ import Icon from '../components/Icon.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import StepDots from '../components/StepDots.jsx';
 import LevelComplete from '../components/LevelComplete.jsx';
+import { LessonProvider } from '../lesson/LessonContext.jsx';
+import LessonToolbar from '../lesson/LessonToolbar.jsx';
 
 export default function LevelScreen({ level, onExit, onNext, isLast, levelControls }) {
   const { state, actions } = useGame();
@@ -77,9 +79,12 @@ export default function LevelScreen({ level, onExit, onNext, isLast, levelContro
       </div>
       <ProgressBar value={(stepIndex + (run.finished ? 1 : 0)) / steps.length} color={meta.accent} label="Level progress" />
 
-      <div className="level-stage" key={`${meta.id}-${stepIndex}`}>
-        <Step api={api} />
-      </div>
+      <LessonProvider levelId={meta.id} stepId={stepMeta.id}>
+        <LessonToolbar />
+        <div className="level-stage" key={`${meta.id}-${stepIndex}`}>
+          <Step api={api} />
+        </div>
+      </LessonProvider>
 
       {run.finished && (
         <LevelComplete

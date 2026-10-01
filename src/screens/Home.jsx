@@ -13,6 +13,7 @@ import Card from '../components/Card.jsx';
 import Icon from '../components/Icon.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import Stars from '../components/Stars.jsx';
+import MasryToggle from '../lesson/MasryToggle.jsx';
 
 export default function Home({ onPlay }) {
   const { state } = useGame();
@@ -42,6 +43,7 @@ export default function Home({ onPlay }) {
                 {doneCount === 0 ? 'Start playing' : allDone ? 'Play again' : `Continue: ${nextLevel.meta.title}`}
               </Button>
             )}
+            <MasryToggle />
           </div>
         </div>
         <Card className="hero-progress">

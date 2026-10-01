@@ -7,6 +7,7 @@ import { useGame } from '../core/GameContext.jsx';
 import { xpForLevel } from '../core/scoring.js';
 import Button from './Button.jsx';
 import Stars from './Stars.jsx';
+import Misconceptions from '../lesson/Misconceptions.jsx';
 
 const HEADLINES = ['Level complete', 'Level complete', 'Great work', 'Flawless!'];
 
@@ -41,6 +42,7 @@ export default function LevelComplete({ meta, run, onNext, onReplay, onMap, isLa
           <div className="eyebrow">The big idea</div>
           <p>{meta.bigIdea}</p>
         </div>
+        <Misconceptions levelId={meta.id} />
         <div className="modal-actions">
           <Button variant="ghost" icon="map" onClick={onMap}>
             Map

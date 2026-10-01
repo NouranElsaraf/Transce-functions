@@ -3,7 +3,8 @@
  *
  * Produces two Markdown files that stay in sync with the code:
  *   - docs/MODULES.md : every source file with a top-of-file `@module` JSDoc block
- *   - docs/LEVELS.md  : every level's metadata (from src/levels/<level>/meta.js)
+ *   - docs/LEVELS.md  : every level's metadata (src/levels/<level>/meta.js) and
+ *                       lesson companion content (src/levels/<level>/lesson.js)
  *
  * Usage:
  *   node scripts/generate-docs.mjs          # write docs
@@ -78,7 +79,9 @@ async function buildLevelsDoc() {
     const metaPath = path.join(levelsDir, entry.name, 'meta.js');
     if (!entry.isDirectory() || !existsSync(metaPath)) continue;
     const mod = await import(pathToFileURL(metaPath).href);
-    metas.push(mod.default);
+    const lessonPath = path.join(levelsDir, entry.name, 'lesson.js');
+    const lesson = existsSync(lessonPath) ? (await import(pathToFileURL(lessonPath).href)).default : null;
+    metas.push({ ...mod.default, lesson });
   }
   metas.sort((a, b) => a.order - b.order);
   if (!metas.length) return md + '_No levels yet._\n';
@@ -93,8 +96,15 @@ async function buildLevelsDoc() {
     md += `**Big idea:** ${m.bigIdea}\n\n**Steps**\n\n`;
     m.steps.forEach((s, i) => {
       md += `${i + 1}. **${s.title}** — ${s.goal}\n`;
+      const ask = m.lesson?.steps?.[s.id]?.ask?.en;
+      if (ask) md += `   - *Ask yourself:* ${ask}\n`;
     });
     md += '\n';
+    if (m.lesson) {
+      md += '**🌍 Where we see it**\n\n' + m.lesson.reality.en.map((x) => `- ${x}`).join('\n') + '\n\n';
+      md += '**👷 How engineers use it**\n\n' + m.lesson.engineer.en.map((x) => `- ${x}`).join('\n') + '\n\n';
+      md += '**⚠️ Common mistakes**\n\n' + m.lesson.misconceptions.map(({ en: [mistake, why] }) => `- *${mistake}* ${why}`).join('\n') + '\n\n';
+    }
   }
   return md;
 }

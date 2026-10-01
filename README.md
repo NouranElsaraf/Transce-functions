@@ -35,6 +35,21 @@ A full, automatically generated guide to every step is in [docs/LEVELS.md](docs/
 - **Accessible input.** Every drag-on-canvas interaction also has a slider, so the whole game works with a keyboard.
 - **Progress saves locally** (`localStorage`). Nothing ever leaves the browser.
 
+### Lesson companion (اشرحها بالمصري)
+
+This layer sits on top of every level without changing any of the game mechanics:
+
+| Feature | What students get |
+|---|---|
+| **🇪🇬 اشرحها بالمصري** | A toggle (on the map and in every lesson). Each step gets an explanation in Egyptian Arabic, written the way an older sibling would explain it. Before you solve the step it only sets up the problem, so it never gives the answer away; after you solve it, it explains why it works. All the companion content below also switches to Arabic. |
+| **Observe → Predict → Interact → Reveal** | A discovery strip and an "Ask yourself" question at the top of every step, *before* any explanation ("What changed?", "Can you predict…?"). |
+| **Real life before the formula** | Every formula is preceded by *Why do we need this?*, one everyday example and one engineering example, so the equation reads as a conclusion. A test checks that no formula appears without them. |
+| **🌍 فين بنشوف ده في الحقيقة؟** | A button in every lesson with three short real-world applications. |
+| **👷 المهندس بيستخدم ده فين؟** | A button in every lesson with three engineering uses (civil, electrical, mechanical…). |
+| **⚠️ Common mistakes** | The end-of-lesson screen lists the 3 most common student mistakes and why each one is wrong. |
+
+The content lives in `src/levels/<Level>/lesson.js` (plain data, English and Arabic), and is also published in [docs/LEVELS.md](docs/LEVELS.md).
+
 ### Teacher Mode
 
 Tap the 🎓 cap in the top bar (or press **Shift + T**):
@@ -86,6 +101,7 @@ For the architecture, design principles and roadmap, see **[PROJECT.md](PROJECT.
 ### Adding a level
 
 1. Create `src/levels/MyLevel/meta.js` (id, title, topic, steps, …). The docs generator reads it.
+   Add `lesson.js` too (Masry explanations, real-life bridges, reality/engineering uses, misconceptions) and register it in `src/lesson/registry.js`.
 2. Write one component per step. Each receives an `api` (`answer`, `hint`, `complete`, `reveal`, `paused`). Wrap it in `<StepLayout>` so it gets hints, the insight card and the Continue button.
 3. Export `{ meta, steps }` from `index.jsx`, and register it in `levels/registry.js` and `levels/metaRegistry.js`.
 4. Run `npm test`. The render tests mount every step automatically.

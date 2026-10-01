@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0 — Lesson companion
+
+### Added
+- **🇪🇬 اشرحها بالمصري** toggle: Egyptian-Arabic explanations for all 33 steps, written like an older sibling explaining it. Each step has a no-spoiler "before" part and a "why it works" part for after you solve it.
+- Discovery strip (Observe → Predict → Interact → Reveal the math) and an "Ask yourself" question on every step.
+- Real-life bridge (why, everyday example, engineering example) shown before every formula, enforced by tests.
+- **🌍 فين بنشوف ده في الحقيقة؟** and **👷 المهندس بيستخدم ده فين؟** buttons in every lesson.
+- 3 common misconceptions per level on the completion screen.
+- The level guide (docs/LEVELS.md) now includes the questions, applications and misconceptions.
+
+No game, level, animation or mechanic was changed.
+
 ## 1.0.0 — Chapter 1 complete
 
 ### Added
