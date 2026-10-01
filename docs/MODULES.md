@@ -96,6 +96,7 @@ bundle dependency-free and give the UI a consistent, calm line style.
 
 The "I noticed…" card that appears *after* an interaction.
 Keep `children` to 2–3 sentences; `formula` is revealed underneath with a flourish.
+`bridge` (real-life context) is shown just before the formula so the equation reads as a conclusion.
 
 ### LevelComplete
 
@@ -183,6 +184,8 @@ Standard frame for a step: prompt → interactive stage → insight → continue
 
 Steps only decide *when* they are `done`; the layout handles hints,
 teacher "reveal" mode and the Continue button so every step feels consistent.
+Inside a level it also shows the lesson companion: the discovery question
+(before any explanation), the Egyptian-Arabic card and the real-life bridge.
 
 ### TeacherPanel
 
@@ -312,6 +315,73 @@ Tracks an element's content-box size with ResizeObserver.
 Reads the design-token colours from CSS custom properties so canvas drawings
 match the current light/dark theme. Recomputes whenever the theme changes.
 
+## `src/lesson`
+
+### lesson/DiscoveryPrompt
+
+`src/lesson/DiscoveryPrompt.jsx`
+
+Discovery flow strip (Observe → Predict → Interact → Reveal the math) plus the
+step's "Ask yourself" question, shown *before* any explanation.
+
+### lesson/LessonContext
+
+`src/lesson/LessonContext.jsx`
+
+Provides the current level's lesson data and step id to everything inside a
+level, plus the active companion language (Egyptian Arabic when "اشرحها
+بالمصري" is on). Components outside a provider get `null` and render nothing,
+so steps keep working on their own (e.g. in tests).
+
+### lesson/LessonToolbar
+
+`src/lesson/LessonToolbar.jsx`
+
+Per-lesson toolbar: the Egyptian-Arabic toggle plus the two real-world
+buttons — "🌍 فين بنشوف ده في الحقيقة؟" and "👷 المهندس بيستخدم ده فين؟" —
+each opening a short sheet of applications.
+
+### lesson/MasryCard
+
+`src/lesson/MasryCard.jsx`
+
+The older-sibling explanation in Egyptian Arabic. Before the step is solved it
+only frames the problem (no spoilers); afterwards it explains the "why".
+
+### lesson/MasryToggle
+
+`src/lesson/MasryToggle.jsx`
+
+"🇪🇬 اشرحها بالمصري" switch. Turns on Egyptian-Arabic explanations and
+switches all lesson-companion content to Arabic. Persisted in settings.
+
+### lesson/Misconceptions
+
+`src/lesson/Misconceptions.jsx`
+
+End-of-lesson list of the 3 most common student mistakes and why each one is wrong.
+
+### lesson/RealityBridge
+
+`src/lesson/RealityBridge.jsx`
+
+Real-life-first bridge shown right before a formula: why we need it, an
+everyday example and an engineering example. The equation then reads as
+the conclusion.
+
+### lesson/registry
+
+`src/lesson/registry.js`
+
+Lesson companion registry: levelId → lesson data (Egyptian-Arabic explanations,
+real-life bridges, reality/engineering uses, misconceptions). Plain data only.
+
+### lesson/strings
+
+`src/lesson/strings.js`
+
+UI labels for the lesson companion in English and Egyptian Arabic.
+
 ## `src/levels`
 
 ### EscapeRoom/LockChain
@@ -375,6 +445,12 @@ lock pulses, the rest stay dark. `solved` counts locks opened so far.
 Level 7 — Escape Room: five locks that each need one earlier insight,
 then a keypad door whose code turns out to be e.
 
+### EscapeRoom/lesson
+
+`src/levels/EscapeRoom/lesson.js`
+
+Level 7 lesson companion (see SpeedDetective/lesson.js for the shape).
+
 ### EscapeRoom/meta
 
 `src/levels/EscapeRoom/meta.js`
@@ -411,6 +487,12 @@ Calls `onMatch` once when the player's curve matches the target.
 `src/levels/GraphSculptor/index.jsx`
 
 Level 3 — Graph Sculptor: transformations of functions, discovered by matching shapes.
+
+### GraphSculptor/lesson
+
+`src/levels/GraphSculptor/lesson.js`
+
+Level 3 lesson companion (see SpeedDetective/lesson.js for the shape).
 
 ### GraphSculptor/meta
 
@@ -489,6 +571,12 @@ linear guesses are there on purpose.
 
 Level 2 — Growing Kingdom: exponential growth, decay, and the number e.
 
+### GrowingKingdom/lesson
+
+`src/levels/GrowingKingdom/lesson.js`
+
+Level 2 lesson companion (see SpeedDetective/lesson.js for the shape).
+
 ### GrowingKingdom/meta
 
 `src/levels/GrowingKingdom/meta.js`
@@ -539,6 +627,12 @@ fixed length. Pure functions, unit-tested.
 
 Level 6 — Hyperbolic World: the catenary, cosh/sinh from exponentials,
 and the circle/hyperbola analogy with trig functions.
+
+### HyperbolicWorld/lesson
+
+`src/levels/HyperbolicWorld/lesson.js`
+
+Level 6 lesson companion (see SpeedDetective/lesson.js for the shape).
 
 ### HyperbolicWorld/meta
 
@@ -602,6 +696,12 @@ turned, drawn up to the current angle — the wave appears as the light spins.
 
 Level 4 — Light Beam: sine and cosine from circular motion; periodicity.
 
+### LightBeam/lesson
+
+`src/levels/LightBeam/lesson.js`
+
+Level 4 lesson companion (see SpeedDetective/lesson.js for the shape).
+
 ### LightBeam/meta
 
 `src/levels/LightBeam/meta.js`
@@ -650,6 +750,13 @@ a single number. Only then is the derivative's limit notation revealed.
 `src/levels/SpeedDetective/index.jsx`
 
 Level 1 — The Speed Detective: speed as slope, tangents, and the derivative.
+
+### SpeedDetective/lesson
+
+`src/levels/SpeedDetective/lesson.js`
+
+Level 1 lesson companion: Egyptian-Arabic explanations, real-life bridges,
+real-world / engineering uses and common misconceptions. Plain data.
 
 ### SpeedDetective/meta
 
@@ -704,6 +811,12 @@ The player recognises the wave from the Light Beam — and that it's cosine.
 `src/levels/TheSwing/index.jsx`
 
 Level 5 — The Swing: periodic motion, cosine in time, and the pendulum period.
+
+### TheSwing/lesson
+
+`src/levels/TheSwing/lesson.js`
+
+Level 5 lesson companion (see SpeedDetective/lesson.js for the shape).
 
 ### TheSwing/meta
 

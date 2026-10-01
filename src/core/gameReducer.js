@@ -20,7 +20,7 @@ export const initialState = {
   levels: {},
   /** achievementId → unlock timestamp */
   achievements: {},
-  settings: { sound: true, theme: 'system' },
+  settings: { sound: true, theme: 'system', masry: false },
   /** Current level attempt; reset on START_LEVEL. */
   run: null,
   /** Teacher tools — never persisted. */

@@ -30,7 +30,8 @@ The experience borrows:
 | M3 — Waves | L4 Light Beam, L5 The Swing | ✅ |
 | M4 — Hyperbolic & finale | L6 Hyperbolic World, L7 Escape Room | ✅ |
 | M5 — Polish | Accessibility pass, docs, tests | ✅ |
-| M6 — Next | See *Future Features* | ⏳ |
+| M6 — Lesson companion | Egyptian-Arabic explanations, discovery prompts, real-life bridges, reality/engineer buttons, misconceptions | ✅ |
+| M7 — Next | See *Future Features* | ⏳ |
 
 ## Architecture
 

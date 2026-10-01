@@ -11,6 +11,7 @@ import './styles/base.css';
 import './styles/components.css';
 import './styles/screens.css';
 import './styles/levels.css';
+import './styles/lesson.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
