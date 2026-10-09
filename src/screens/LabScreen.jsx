@@ -4,9 +4,12 @@
  */
 import { assetUrl, loadPublishedLessons } from '../engine/catalog/published.js';
 import LessonPlayer from '../lab/LessonPlayer.jsx';
+import { loadReviewPreviewLessons } from '../engine/catalog/reviewPreview.js';
 
-export default function LabScreen({ id, onExit }) {
-  const lesson = loadPublishedLessons().lessons.find((l) => l.id === id);
+export default function LabScreen({ id, onExit, review = false }) {
+  const lesson = review
+    ? loadReviewPreviewLessons().find((l) => l.id === id)
+    : loadPublishedLessons().lessons.find((l) => l.id === id);
   if (!lesson) {
     return (
       <main className="lab" dir="rtl" lang="ar">
@@ -17,5 +20,5 @@ export default function LabScreen({ id, onExit }) {
       </main>
     );
   }
-  return <LessonPlayer lesson={lesson} mode="student" onExit={onExit} resolveAsset={assetUrl} />;
+  return <LessonPlayer lesson={lesson} mode={review ? 'preview' : 'student'} onExit={onExit} resolveAsset={assetUrl} />;
 }

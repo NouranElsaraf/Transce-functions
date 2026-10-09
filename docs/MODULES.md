@@ -14,7 +14,8 @@ Application shell: a tiny screen router (map ↔ level) plus global overlays —
 top bar, instant-feedback pill, toasts, the teacher panel and ink layer.
 The current screen is mirrored into the URL hash so refresh/back work:
   #/level/<id>  original games · #/lab/<id> published engine lessons ·
-  #/studio      local authoring studio (needs the studio server).
+  #/studio      local authoring studio (needs the studio server) ·
+  #/review/<id> review preview (only in `npm run build:review` builds).
 
 ### main
 
@@ -303,6 +304,19 @@ then re-checks every lesson on load: schema-valid, status "published", a
 recorded human approval, and content matching the approval hash. Anything
 else is dropped (and reported in `rejected`) — a file copied into the folder
 by hand cannot reach students.
+
+### engine/catalog/reviewPreview
+
+`src/engine/catalog/reviewPreview.js`
+
+Review-preview catalogue — ONLY in builds made with VITE_REVIEW_PREVIEW=1
+(`npm run build:review`). It bundles working copies from content/lessons/
+that are valid and awaiting review (in_review / approved) so reviewers can
+try them from a shareable static link. They render in preview mode (banner,
+no progress) and never pass through the student publishing gate.
+
+In normal builds the condition is a compile-time `false`, so no unpublished
+lesson is bundled (a test checks the production bundle).
 
 ### engine/generation/pipeline
 

@@ -3,7 +3,8 @@
  * top bar, instant-feedback pill, toasts, the teacher panel and ink layer.
  * The current screen is mirrored into the URL hash so refresh/back work:
  *   #/level/<id>  original games · #/lab/<id> published engine lessons ·
- *   #/studio      local authoring studio (needs the studio server).
+ *   #/studio      local authoring studio (needs the studio server) ·
+ *   #/review/<id> review preview (only in `npm run build:review` builds).
  * @module App
  */
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
@@ -30,6 +31,8 @@ const readRoute = () => {
   const h = window.location.hash;
   const lab = h.match(/^#\/lab\/([\w-]+)/);
   if (lab) return { kind: 'lab', id: lab[1] };
+  const review = h.match(/^#\/review\/([\w-]+)/);
+  if (review) return { kind: 'review', id: review[1] };
   if (/^#\/studio/.test(h)) return { kind: 'studio' };
   return null;
 };
@@ -97,6 +100,8 @@ export default function App() {
           </Suspense>
         ) : route?.kind === 'lab' ? (
           <LabScreen id={route.id} onExit={() => go(null)} />
+        ) : route?.kind === 'review' ? (
+          <LabScreen id={route.id} review onExit={() => go(null)} />
         ) : level ? (
           <LevelScreen
             key={level.meta.id}

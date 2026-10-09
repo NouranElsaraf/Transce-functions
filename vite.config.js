@@ -8,6 +8,8 @@ export default defineConfig({
   plugins: [react()],
   // `npm run studio` runs the local authoring API on 8787; the dev server proxies to it.
   server: { proxy: { '/api': 'http://127.0.0.1:8787' } },
+  // Review-preview builds are shipped as one self-contained file, so keep a single JS chunk.
+  build: process.env.VITE_REVIEW_PREVIEW === '1' ? { rollupOptions: { output: { inlineDynamicImports: true } } } : {},
   test: {
     environment: 'jsdom',
     include: ['tests/**/*.test.{js,jsx}'],

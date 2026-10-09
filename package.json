@@ -7,6 +7,8 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run docs && vite build",
+    "check:unpublished": "node scripts/check-no-unpublished.mjs",
+    "build:review": "npm run docs && VITE_REVIEW_PREVIEW=1 vite build --outDir dist-review",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",

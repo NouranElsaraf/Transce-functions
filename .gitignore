@@ -7,3 +7,4 @@ coverage/
 
 # Local studio data (generation request log is per-machine)
 content/requests/
+dist-review/

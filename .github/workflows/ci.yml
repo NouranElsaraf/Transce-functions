@@ -19,3 +19,5 @@ jobs:
         run: npm run docs:check
       - run: npm test
       - run: npm run build
+      - name: No unpublished lessons in the production bundle
+        run: node scripts/check-no-unpublished.mjs
