@@ -11,10 +11,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "docs": "node scripts/generate-docs.mjs",
-    "docs:check": "node scripts/generate-docs.mjs --check"
+    "docs:check": "node scripts/generate-docs.mjs --check",
+    "studio": "node scripts/studio.mjs",
+    "studio:server": "node server/index.mjs",
+    "lessons:import": "node scripts/import-lesson.mjs",
+    "lessons:demo": "node scripts/build-demo-lesson.mjs"
   },
   "license": "MIT",
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.132.1",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },

@@ -14,6 +14,7 @@ import Icon from '../components/Icon.jsx';
 import ProgressBar from '../components/ProgressBar.jsx';
 import Stars from '../components/Stars.jsx';
 import MasryToggle from '../lesson/MasryToggle.jsx';
+import LabShelf from './LabShelf.jsx';
 
 export default function Home({ onPlay }) {
   const { state } = useGame();
@@ -121,6 +122,8 @@ export default function Home({ onPlay }) {
         </ol>
       </section>
 
+      <LabShelf />
+
       <section aria-labelledby="ach-title">
         <h2 id="ach-title" className="section-title">
           Achievements
@@ -145,7 +148,7 @@ export default function Home({ onPlay }) {
 
       <footer className="home-foot">
         Instructor? Tap the <Icon name="teacher" size={16} /> cap in the top bar for Teacher Mode (skip levels, draw, pause,
-        reveal).
+        reveal). Authors: <a href="#/studio">lesson studio</a> (runs locally).
       </footer>
     </main>
   );

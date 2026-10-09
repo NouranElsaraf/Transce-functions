@@ -7,6 +7,7 @@
  * @module gameReducer
  */
 import { starsFor, xpForCorrect, xpForLevel } from './scoring.js';
+import { labReducer } from '../engine/progress/labProgress.js';
 
 export const STATE_VERSION = 1;
 
@@ -20,6 +21,8 @@ export const initialState = {
   levels: {},
   /** achievementId → unlock timestamp */
   achievements: {},
+  /** Engine lessons (Living Lab) progress — see engine/progress/labProgress.js. */
+  lessons: {},
   settings: { sound: true, theme: 'system', masry: false },
   /** Current level attempt; reset on START_LEVEL. */
   run: null,
@@ -37,6 +40,8 @@ export function hydrate(saved) {
     ...saved,
     stats: { ...initialState.stats, ...saved.stats },
     settings: { ...initialState.settings, ...saved.settings },
+    // Saves made before engine lessons existed have no `lessons` map.
+    lessons: saved.lessons && typeof saved.lessons === 'object' && !Array.isArray(saved.lessons) ? saved.lessons : {},
     teacher: { ...initialState.teacher },
     run: null,
     lastGain: null,
@@ -136,6 +141,13 @@ export function gameReducer(state, action) {
       }
       return { ...state, teacher };
     }
+
+    case 'LAB_STAGE':
+    case 'LAB_ANSWER':
+    case 'LAB_NEW_SEED':
+    case 'LAB_COMPLETE':
+    case 'LAB_RESET':
+      return { ...state, lessons: labReducer(state.lessons, action) };
 
     case 'RESET_PROGRESS':
       return { ...initialState, settings: state.settings, teacher: state.teacher };

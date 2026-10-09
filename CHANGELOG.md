@@ -1,5 +1,19 @@
 # Changelog
 
+## Unreleased — Learning Experience Engine (feature/learning-engine, pending review)
+
+### Added
+- Versioned lesson schema (v1) with a strict validator, named computations for every answer, and an interaction catalogue + renderer registry.
+- Review workflow enforced at the store (writes) and the student catalogue (reads): draft → in review → approved (named human, checklist, acknowledged warnings) → published snapshot; content edits and narration uploads invalidate approval.
+- Local studio (`npm run studio`, `#/studio`): generate (replaceable provider; Anthropic adapter needs a server-side key), import, validate, preview, review, approve, publish, upload narration.
+- Living Lab renderer and the integration lesson “الخزان بيتملى بكام؟” (hand-authored demo content, currently **in review**, not published).
+- Programmatic 48 s explainer: one timeline for animation, Arabic captions and narration, with play/pause/replay/mute/speed/seek.
+- Engine-lesson progress in the existing save (`lessons`), same storage key and version.
+
+### Not done / pending
+- Live AI generation: implemented, not run (no credentials in this environment).
+- Narration audio: upload pipeline done; no Egyptian-Arabic recording exists yet.
+
 ## 1.1.0 — Lesson companion
 
 ### Added

@@ -6,6 +6,8 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   base: './',
   plugins: [react()],
+  // `npm run studio` runs the local authoring API on 8787; the dev server proxies to it.
+  server: { proxy: { '/api': 'http://127.0.0.1:8787' } },
   test: {
     environment: 'jsdom',
     include: ['tests/**/*.test.{js,jsx}'],

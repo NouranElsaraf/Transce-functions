@@ -12,7 +12,9 @@ Every documented source file, grouped by folder. Add a `/** ... @module Name */`
 
 Application shell: a tiny screen router (map ↔ level) plus global overlays —
 top bar, instant-feedback pill, toasts, the teacher panel and ink layer.
-The current screen is mirrored into the URL hash so refresh/back work.
+The current screen is mirrored into the URL hash so refresh/back work:
+  #/level/<id>  original games · #/lab/<id> published engine lessons ·
+  #/studio      local authoring studio (needs the studio server).
 
 ### main
 
@@ -290,6 +292,161 @@ Safe wrapper around localStorage.
 Private windows, blocked cookies or quota errors must never crash the game,
 so every access is guarded and falls back to in-memory defaults.
 
+## `src/engine`
+
+### engine/catalog/published
+
+`src/engine/catalog/published.js`
+
+Student-facing catalogue. Bundles content/published/*.json at build time,
+then re-checks every lesson on load: schema-valid, status "published", a
+recorded human approval, and content matching the approval hash. Anything
+else is dropped (and reported in `rejected`) — a file copied into the folder
+by hand cannot reach students.
+
+### engine/generation/pipeline
+
+`src/engine/generation/pipeline.js`
+
+Generation pipeline: request → provider (with retries) → parse → sanitise →
+validate → save as DRAFT. Never approves or publishes.
+
+Drafts are never lost:
+ - the request is recorded before the provider is called;
+ - a provider failure only marks that request failed — existing drafts are untouched;
+ - output that parses but fails validation is still saved as a draft (with its
+   report) so an author can fix it; output that does not parse is kept as raw
+   text on the request record.
+
+### engine/generation/prompt
+
+`src/engine/generation/prompt.js`
+
+Builds the provider prompt. The model must return ONE JSON lesson that fits
+schema v1 and only uses supported interaction types and named computations.
+The author's request is passed as quoted data, never as instructions.
+
+### engine/generation/request
+
+`src/engine/generation/request.js`
+
+Validates an author's generation request. Treated as untrusted input:
+bounded lengths, no markup, known student levels, Egyptian Arabic default.
+
+### engine/hash
+
+`src/engine/hash.js`
+
+Deterministic content hashing used to bind an approval to exact content.
+Canonical JSON (sorted keys) + cyrb53. This detects any change to approved
+content; it is an integrity check, not a security signature.
+
+### engine/interactions/catalog
+
+`src/engine/interactions/catalog.js`
+
+Catalogue of supported interaction types: what each one teaches (skills),
+its parameters, and how to validate them. Pure data + validators — no React —
+so the schema validator, the generation prompt and the renderer registry all
+share one source of truth.
+
+Adding a lesson that only uses these types needs no renderer change. A new
+type needs an entry here AND a component in `src/lab/registry.jsx`.
+
+### engine/math/accumulation
+
+`src/engine/math/accumulation.js`
+
+Accumulation maths for flow-rate lessons: a piecewise-linear flow rate Q(t),
+its exact integral, rectangle (Riemann) sums and a tank model with explicit
+overflow. Pure functions, unit-tested.
+
+Units (by convention across the engine): t in minutes, Q in litres/minute,
+volumes in litres.
+
+### engine/math/compute
+
+`src/engine/math/compute.js`
+
+Whitelisted computations that lesson content may reference *by name* to get
+a correct answer. Content never contains code or trusted answer numbers:
+an assessment says `{ compute: 'riemann', args: {...} }` and the engine
+calculates the answer here. Each entry validates its own arguments.
+
+### engine/narration/playback
+
+`src/engine/narration/playback.js`
+
+Playback controller for the explainer: one clock for animation, captions and
+narration audio, with play / pause / replay / seek / speed / mute.
+
+Guarantees:
+ - Only one playback is active app-wide: starting one pauses any other, so
+   narration never overlaps.
+ - `dispose()` stops audio and the clock; components call it on unmount
+   (i.e. on navigation).
+ - With an audio track the clock follows `audio.currentTime` (the recording
+   is the master); otherwise a monotonic internal clock is used.
+
+The audio object only needs the HTMLMediaElement subset used here, so tests
+can pass a fake.
+
+### engine/narration/timeline
+
+`src/engine/narration/timeline.js`
+
+One timeline drives the explainer: animation scene, captions and narration
+all read the same clock value `t` (seconds). These pure helpers turn `t`
+into what should be on screen.
+
+### engine/progress/labProgress
+
+`src/engine/progress/labProgress.js`
+
+Progress for engine lessons, stored inside the existing game save under
+`lessons` (same storage key and STATE_VERSION as the original game, so old
+saves load unchanged and simply gain an empty `lessons` map).
+
+A lesson is complete only when every learning objective has been
+demonstrated by at least one *credited* assessment — not when the last scene
+is reached. An answer is credited only when it shows the student's own
+reasoning: a choice right on the first pick, or a numeric answer right before
+its worked explanation was shown (see the assessment components).
+
+  lessons[lessonId] = {
+    stage, furthest,                       // stage indices
+    attempts: { [assessmentId]: { tries, correct, credited, last, seed } },
+    objectives: { [objectiveId]: true },
+    completed, completedAt, contentHash
+  }
+
+### engine/review/workflow
+
+`src/engine/review/workflow.js`
+
+Review workflow — the single place that decides what a lesson's review
+status may become. The server store calls these functions for every write,
+and the student-facing loader calls `isPublishable` on every read, so a
+lesson can only reach students through draft → in_review → approved →
+published with a human reviewer and an approval bound to the exact content.
+
+All functions are pure: they return a new lesson or throw a ReviewError.
+
+### engine/schema/lessonSchema
+
+`src/engine/schema/lessonSchema.js`
+
+Lesson schema v1 and its validator.
+
+Every lesson — AI-generated, imported or hand-authored — is untrusted data
+until `validateLesson` passes. The validator is strict: unknown keys,
+unsupported interaction types, uncomputable answers, malformed timelines or
+unreachable objectives are errors. Soft issues (e.g. unsupported concepts the
+author listed) are warnings that a reviewer must acknowledge before approval.
+
+Teaching flow enforced by stage order:
+  problem → prediction → experiment → explanation → equation → practice → challenge
+
 ## `src/hooks`
 
 ### useAnimationFrame
@@ -314,6 +471,116 @@ Tracks an element's content-box size with ResizeObserver.
 
 Reads the design-token colours from CSS custom properties so canvas drawings
 match the current light/dark theme. Recomputes whenever the theme changes.
+
+## `src/lab`
+
+### lab/LessonPlayer
+
+`src/lab/LessonPlayer.jsx`
+
+Generic lesson renderer for validated engine lessons ("Living Lab").
+
+Renders stages in the schema's teaching order, looks up each interaction in
+the registry, shows the stage's assessments, and tracks progress through the
+shared lab reducer: in the game save for students, in local state for
+previews (previews never write progress).
+
+A stage can be left once each of its assessments is resolved (a prediction
+only needs an attempt). The lesson completes only when every objective has a
+credited answer.
+
+### lab/Notebook
+
+`src/lab/Notebook.jsx`
+
+The notebook margin: objectives with mastery marks, and — collapsed until
+wanted — everyday/engineering examples, units, assumptions, model limits and
+sources. Explanations stay out of the way of the experiment.
+
+### lab/apparatus/FlowTankView
+
+`src/lab/apparatus/FlowTankView.jsx`
+
+The experiment bench: a tank with a litre scale, inlet valve, flow meter and
+overflow pipe, beside the flow-rate graph. Both are drawn from the same
+state (time, valve, shading, rectangles), so they can never disagree.
+
+Used by the flow-tank experiment, the animated explainer and the rectangle
+stage. Purely presentational: callers own the clock and controls.
+
+### lab/apparatus/useLabColors
+
+`src/lab/apparatus/useLabColors.js`
+
+Reads the Living Lab palette (CSS custom properties on `.lab`) for canvas
+drawing, and re-reads it when the theme changes.
+
+### lab/assessments/ChoiceAssessment
+
+`src/lab/assessments/ChoiceAssessment.jsx`
+
+Multiple-choice reasoning question. Each wrong option explains itself and,
+when linked, names the misconception behind it. Only a correct FIRST pick
+earns mastery credit (no credit for elimination); "حاول تاني" offers a fresh try.
+
+### lab/assessments/NumericAssessment
+
+`src/lab/assessments/NumericAssessment.jsx`
+
+Numeric question with units. The answer is computed by the engine (named
+computation), checked within tolerance, and followed by an explanation.
+"New values" challenges draw fresh numbers from a seed. A right answer earns
+mastery credit only if the worked explanation was not shown yet for these values.
+
+### lab/format
+
+`src/lab/format.js`
+
+Number formatting for the lab (Western digits — as on lab scales and in
+Egyptian engineering classes — with thousands separators).
+
+### lab/interactions/EquationInteraction
+
+`src/lab/interactions/EquationInteraction.jsx`
+
+Equation built from safe tokens (always rendered left-to-right inside the
+RTL page), with a legend of meanings and units.
+
+### lab/interactions/ExplainerInteraction
+
+`src/lab/interactions/ExplainerInteraction.jsx`
+
+Animated explainer: one `Playback` clock drives the scene (via sceneAt),
+the Arabic captions (captionAt) and — when a recording is attached — the
+narration audio. Controls: play/pause, replay, mute, speed, seek.
+Disposing on unmount stops audio when the student navigates away.
+
+After the explainer, the same simulation opens for free exploration.
+
+An optional browser speech preview exists for authors; it is labelled as a
+preview and is not treated as real Egyptian-Arabic narration.
+
+### lab/interactions/FlowTankInteraction
+
+`src/lab/interactions/FlowTankInteraction.jsx`
+
+Experiment: tank and flow-rate graph in sync. Controls (per lesson params):
+play/pause the clock, scrub time, open/close the valve (scales Q).
+
+### lab/interactions/RiemannInteraction
+
+`src/lab/interactions/RiemannInteraction.jsx`
+
+Rectangle sums vs the exact integral, with a slider for the number of
+intervals and a choice of sample point. A small table shows convergence.
+
+### lab/registry
+
+`src/lab/registry.jsx`
+
+Renderer registry: interaction type → component. Must cover every type in
+engine/interactions/catalog.js (a test enforces this). Lessons that use only
+these types render with no code changes.
 
 ## `src/lesson`
 
@@ -867,6 +1134,19 @@ Every step component receives a {@link StepAPI} as its `api` prop.
 The map: hero with a single obvious "continue" action, the level path,
 the achievement shelf and — once everything is solved — the certificate.
 
+### LabScreen
+
+`src/screens/LabScreen.jsx`
+
+Student route for a published engine lesson (#/lab/<id>).
+
+### LabShelf
+
+`src/screens/LabShelf.jsx`
+
+"Living Lab" shelf on the map: lists only lessons that passed the publishing
+gate (see engine/catalog/published.js). Shows nothing when none are published.
+
 ### LevelScreen
 
 `src/screens/LevelScreen.jsx`
@@ -875,4 +1155,15 @@ Runs one level: shows the header (title, step dots, progress), renders the
 current step with its StepAPI, and shows the completion modal at the end.
 
 Also registers `skipStep` / `skipLevel` handlers for the Teacher panel.
+
+## `src/studio`
+
+### studio/Studio
+
+`src/studio/Studio.jsx`
+
+Authoring studio (#/studio): generate or import → validate → preview →
+human review → approve → publish. Talks to the local studio server; every
+rule (approval, invalidation, publishing) is enforced there, not by which
+buttons are visible here.
 

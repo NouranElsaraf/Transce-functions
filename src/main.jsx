@@ -12,6 +12,7 @@ import './styles/components.css';
 import './styles/screens.css';
 import './styles/levels.css';
 import './styles/lesson.css';
+import './styles/lab.css';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

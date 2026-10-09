@@ -52,6 +52,16 @@ This layer sits on top of every level without changing any of the game mechanics
 
 The content lives in `src/levels/<Level>/lesson.js` (plain data, English and Arabic), and is also published in [docs/LEVELS.md](docs/LEVELS.md).
 
+### Learning Experience Engine (in review)
+
+A data-driven lesson engine sits next to the seven games, with an authoring studio (`npm run studio` → `#/studio`). Its first lesson is about integration as accumulated water: «الخزان بيتملى بكام؟». Lessons are validated JSON. They reach students only after named human approval, and the publishing gate is enforced on both the server and the client.
+
+The first lesson is in review and is not published yet. See **[docs/LEARNING_ENGINE.md](docs/LEARNING_ENGINE.md)** for the schema, provider setup and review checklist.
+
+| | |
+|---|---|
+| ![Experiment](docs/screenshots/lab-experiment.png) | ![Explainer](docs/screenshots/lab-explainer.png) |
+
 ### Teacher Mode
 
 Tap the 🎓 cap in the top bar (or press **Shift + T**):

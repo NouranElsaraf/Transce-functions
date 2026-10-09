@@ -1,10 +1,12 @@
 /**
  * Application shell: a tiny screen router (map ↔ level) plus global overlays —
  * top bar, instant-feedback pill, toasts, the teacher panel and ink layer.
- * The current screen is mirrored into the URL hash so refresh/back work.
+ * The current screen is mirrored into the URL hash so refresh/back work:
+ *   #/level/<id>  original games · #/lab/<id> published engine lessons ·
+ *   #/studio      local authoring studio (needs the studio server).
  * @module App
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { useGame } from './core/GameContext.jsx';
 import { LEVELS, levelById } from './levels/registry.js';
 import TopBar from './components/TopBar.jsx';
@@ -15,15 +17,27 @@ import DrawingOverlay from './components/DrawingOverlay.jsx';
 import Home from './screens/Home.jsx';
 import LevelScreen from './screens/LevelScreen.jsx';
 import { isUnlocked } from './core/gameReducer.js';
+import LabScreen from './screens/LabScreen.jsx';
+
+const Studio = lazy(() => import('./studio/Studio.jsx'));
 
 const readHash = () => {
   const m = window.location.hash.match(/^#\/level\/([\w-]+)/);
   return m ? m[1] : null;
 };
 
+const readRoute = () => {
+  const h = window.location.hash;
+  const lab = h.match(/^#\/lab\/([\w-]+)/);
+  if (lab) return { kind: 'lab', id: lab[1] };
+  if (/^#\/studio/.test(h)) return { kind: 'studio' };
+  return null;
+};
+
 export default function App() {
   const { state, actions } = useGame();
   const [levelId, setLevelId] = useState(readHash);
+  const [route, setRoute] = useState(readRoute);
   const [inkClear, setInkClear] = useState(0);
   const levelControls = useRef(null);
 
@@ -33,12 +47,16 @@ export default function App() {
 
   const go = useCallback((id) => {
     setLevelId(id);
+    setRoute(null);
     window.location.hash = id ? `/level/${id}` : '/';
     window.scrollTo({ top: 0 });
   }, []);
 
   useEffect(() => {
-    const onHash = () => setLevelId(readHash());
+    const onHash = () => {
+      setLevelId(readHash());
+      setRoute(readRoute());
+    };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
@@ -73,7 +91,13 @@ export default function App() {
       </div>
       <TopBar onHome={() => go(null)} />
       <div id="main" tabIndex={-1}>
-        {level ? (
+        {route?.kind === 'studio' ? (
+          <Suspense fallback={<p className="lab-note">بيحمّل الاستوديو…</p>}>
+            <Studio onExit={() => go(null)} />
+          </Suspense>
+        ) : route?.kind === 'lab' ? (
+          <LabScreen id={route.id} onExit={() => go(null)} />
+        ) : level ? (
           <LevelScreen
             key={level.meta.id}
             level={level}
