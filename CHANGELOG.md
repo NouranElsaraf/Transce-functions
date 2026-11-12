@@ -10,6 +10,9 @@
 - Programmatic 48 s explainer: one timeline for animation, Arabic captions and narration, with play/pause/replay/mute/speed/seek.
 - Engine-lesson progress in the existing save (`lessons`), same storage key and version.
 
+### Security
+- Studio API rejects cross-site and DNS-rebinding requests: loopback `Host` allowlist (403), `Origin` allowlist on writes (403), `application/json` required for JSON bodies (415). Vite dev port is now strict (5173). Docs now say plainly that the studio has no authentication and `by` is self-reported.
+
 ### Not done / pending
 - Live AI generation: implemented, not run (no credentials in this environment).
 - Narration audio: upload pipeline done; no Egyptian-Arabic recording exists yet.

@@ -54,7 +54,7 @@ The content lives in `src/levels/<Level>/lesson.js` (plain data, English and Ara
 
 ### Learning Experience Engine (in review)
 
-A data-driven lesson engine sits next to the seven games, with an authoring studio (`npm run studio` → `#/studio`). Its first lesson is about integration as accumulated water: «الخزان بيتملى بكام؟». Lessons are validated JSON. They reach students only after named human approval, and the publishing gate is enforced on both the server and the client.
+A data-driven lesson engine sits next to the seven games, with an authoring studio (`npm run studio` → `#/studio`). Its first lesson is about integration as accumulated water: «الخزان بيتملى بكام؟». Lessons are validated JSON. They reach students only after a human approves them in the studio, and the review gate (draft → in review → approved → published) is enforced on both the server and the client. The studio is a local, single-user tool with no authentication: the reviewer name (`by`) is self-reported, not verified. Its API accepts only loopback `Host`/`Origin` headers and `application/json` bodies, which blocks cross-site requests from other web pages and DNS rebinding (details in the doc below).
 
 The first lesson is in review and is not published yet. See **[docs/LEARNING_ENGINE.md](docs/LEARNING_ENGINE.md)** for the schema, provider setup and review checklist.
 

@@ -37,7 +37,20 @@ npm run studio          # studio API on 127.0.0.1:8787 + Vite on :5173
 - **Review**: enter a reviewer name, tick the 5 checklist items, acknowledge warnings, then approve.
 - **Publish**: writes `content/published/<id>.json`. Students see it on the map ("المعمل الحي") at `#/lab/<id>` after the next build or dev reload.
 
-The studio server has **no login**. It binds to `127.0.0.1`, so keep it on your own machine.
+### Security model (local, single user)
+
+The studio is a **local, single-user tool with no login and no authentication**. Keep it on your own machine.
+
+- **`by` is not authenticated.** The author and reviewer names in the history (`by`, `approvedBy`) are whatever the person at the keyboard typed. They record who *says* they did it; they do not prove it. "Named approval" means a name is required, not verified.
+- **Network:** the API binds to `127.0.0.1` only.
+- **Host allowlist (DNS rebinding):** every request needs a `Host` of `localhost`, `127.0.0.1` or `[::1]` on the API port (`STUDIO_PORT`, default 8787) or the Vite dev port (5173). Anything else gets **403**.
+- **Origin allowlist (CSRF):** every non-GET request that carries an `Origin` header must come from `http://localhost`, `http://127.0.0.1` or `http://[::1]` on one of those ports, or it gets **403**. A request with **no** `Origin` is allowed: browsers always send `Origin` on cross-origin POST/PUT, so a missing one means a non-browser client on this machine (curl, a script). Anything that can already run a process locally is out of scope.
+- **JSON only:** JSON routes require `Content-Type: application/json`, or they return **415**. This blocks the `text/plain` and form posts a foreign page can send without a CORS preflight, and the server never answers preflights. The narration upload keeps its own rule: `audio/*` types only (415 otherwise).
+- **Vite proxy:** `npm run studio` serves the UI on `localhost:5173` (strict port) and proxies `/api` without `changeOrigin`, so the browser's real `Host` and `Origin` reach the API and get checked.
+
+What this does **not** cover: other users or malware on the same machine, a browser extension with host permissions, or running the server on a shared or public interface. Don't do that last one.
+
+The checks live in `server/requestGuard.mjs` and are tested in `tests/server/requestGuard.test.js` and `tests/server/http.test.js`, which replays the original cross-site probe directly and through a real Vite proxy.
 
 ## Providers
 
