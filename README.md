@@ -5,6 +5,8 @@
 No login. No backend. No formulas up front. There are seven levels and about an hour of play, and each one follows the same loop:
 **predict → try → notice → then name it.**
 
+**▶ [Play it in your browser](https://nouranelsaraf.github.io/Transce-functions/)**
+
 ![The map](docs/screenshots/map.png)
 
 ## Levels
