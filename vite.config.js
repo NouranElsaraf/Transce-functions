@@ -7,7 +7,9 @@ export default defineConfig({
   base: './',
   plugins: [react()],
   // `npm run studio` runs the local authoring API on 8787; the dev server proxies to it.
-  server: { proxy: { '/api': 'http://127.0.0.1:8787' } },
+  // The API only accepts Host/Origin on localhost:5173 (see server/requestGuard.mjs), so the
+  // port is strict, and the proxy must NOT set changeOrigin (that would rewrite Host to 8787).
+  server: { port: 5173, strictPort: true, proxy: { '/api': 'http://127.0.0.1:8787' } },
   // Review-preview builds are shipped as one self-contained file, so keep a single JS chunk.
   build: process.env.VITE_REVIEW_PREVIEW === '1' ? { rollupOptions: { output: { inlineDynamicImports: true } } } : {},
   test: {
